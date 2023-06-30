@@ -8,16 +8,17 @@ app = FastAPI()
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 config = {
+    "name":"user4",
     "optimizer":"sgd",
     "classification_type":"binary",
     "learning_rate": 0.1,
-    "epochs": 1000,
+    "epochs": 50000,
     "layer_sizes": [2, 8, 8, 1]
 }
 
 @app.get("/api/hello")
-def hello():
-    csv_classification.train_csv_classification(config)
+async def hello():
+    await csv_classification.train_csv_classification(config)
     return {"message": "Hello, World!"}
 
 

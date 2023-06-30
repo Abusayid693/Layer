@@ -2,12 +2,12 @@ import torch
 import sklearn
 from sklearn.model_selection import train_test_split
 
-from .helpers import getDemoBinaryData, getDemoMultiClassData
+from .helpers import getDemoBinaryData, getDemoMultiClassData, saveModelStateDict
 from .classification import CSVClassificationMo, configure_training_params
 from .model import fit_model
 
 
-def train_csv_classification(config):
+async def train_csv_classification(config):
     data, label = (
         getDemoBinaryData()
         if config["classification_type"] == "binary"
@@ -28,5 +28,7 @@ def train_csv_classification(config):
     optimizer, loss_fn = configure_training_params(config, model)
 
     fit_model(config, model, loss_fn, optimizer, X_train, Y_train, X_test, Y_test)
+
+    saveModelStateDict(config["name"], model)
 
     return ""
