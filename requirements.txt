@@ -1,6 +1,9 @@
 fastapi
 uvicorn
-pytorch
+torch
 matplotlib
 numpy
 scikit-learn
+torchvision
+wheel
+coincurve
