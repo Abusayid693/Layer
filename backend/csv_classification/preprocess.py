@@ -4,7 +4,7 @@ import numpy as np
 from .constant import BINARY, MULTICLASS
 
 
-async def processCsvData(config):
+def processCsvData(config):
     data = readCsvFile("")
 
     rows, cols = data.shape

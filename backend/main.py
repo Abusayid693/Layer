@@ -3,7 +3,7 @@ import uvicorn
 import csv_classification
 from fastapi import BackgroundTasks, FastAPI
 import asyncio
-from celery_worker import create_task
+from celery_worker import create_task, addCsvClassificationTask
 from fastapi.responses import JSONResponse
 processing_tasks = False
 
@@ -21,23 +21,6 @@ config = {
     "layer_sizes": [2, 8, 8, 4],
     "batch_size": 32,
 }
-
-def run_task(task, *params):
-    asyncio.create_task(task(*params))
-
-async def process_tasks():
-    global processing_tasks
-
-    # Check if any tasks are in the queue
-    while not task_queue.empty():
-        # Get the next task from the queue
-        task, *params = await task_queue.get()
-
-        # Run the task
-        # await task(*params)
-        run_task(task, *params)
-
-    processing_tasks = False
 
 
 @app.get("/api/test")
@@ -58,16 +41,18 @@ async def hello(background_tasks: BackgroundTasks):
 
     data, label =  await csv_classification.processCsvData(config)
 
-    await csv_classification.train_csv_classification(config, data, label, task_queue)
-
-    # task_queue.put_nowait((csv_classification.train_csv_classification , config, data, label, task_queue))
-
-    # global processing_tasks
-    # if not processing_tasks:
-    #     processing_tasks = True
-    #     background_tasks.add_task(process_tasks)
+    await csv_classification.train_csv_classification(config, data, label)
 
     return {"message": "Training started in the background. "}
+
+
+@app.get("/api/csv")
+async def hello():
+    # data, label =  await csv_classification.processCsvData(config)
+
+    addCsvClassificationTask.delay()
+
+    return {"message": "Training started in the background."}
 
 
 def print_hi(name):
