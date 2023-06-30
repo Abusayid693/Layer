@@ -5,14 +5,17 @@ from sklearn.model_selection import train_test_split
 from .helpers import getDemoBinaryData, getDemoMultiClassData, saveModelStateDict
 from .classification import CSVClassificationMo, configure_training_params
 from .model import fit_model
+from .preprocess import processCsvData
 
 
 async def train_csv_classification(config):
-    data, label = (
-        getDemoBinaryData()
-        if config["classification_type"] == "binary"
-        else getDemoMultiClassData()
-    )
+   #  data, label = (
+   #      getDemoBinaryData()
+   #      if config["classification_type"] == "binary"
+   #      else getDemoMultiClassData()
+   #  )
+
+    data, label = processCsvData(config)
 
     X_blob = torch.from_numpy(data).type(torch.float)
     y_blob = (

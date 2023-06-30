@@ -8,12 +8,12 @@ app = FastAPI()
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 config = {
-    "name":"user4",
+    "name":"user5",
     "optimizer":"sgd",
     "classification_type":"binary",
     "learning_rate": 0.1,
-    "epochs": 50000,
-    "layer_sizes": [2, 8, 8, 1]
+    "epochs": 1500,
+    "layer_sizes": [2, 8, 8, 4]
 }
 
 @app.get("/api/hello")

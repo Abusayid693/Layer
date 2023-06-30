@@ -57,3 +57,21 @@ def calculate_accuracy(y_true, y_pred):
     correct = torch.eq(y_true, y_pred).sum().item()
     acc = (correct / len(y_pred)) * 100    
     return acc
+
+
+def getDemoMultiClassCSVData():
+    header = "X1, X2, L"
+
+    X_blob, y_blob = getDemoMultiClassData()
+
+    y_blob = y_blob.reshape(-1, 1)
+
+    combined_array = np.hstack((X_blob, y_blob))
+    np.savetxt(
+        "output.csv",
+        combined_array,
+        delimiter=",",
+        header=header,
+        comments="",
+        fmt="%.8f",
+    )

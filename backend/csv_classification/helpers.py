@@ -4,6 +4,9 @@ from pathlib import Path
 import sklearn
 from sklearn.datasets import make_blobs
 from sklearn.datasets import make_circles
+import numpy as np
+import os
+
 
 def getSequentialLayer(layer_sizes: list[int]):
     layers = []
@@ -41,15 +44,32 @@ def getDemoBinaryData():
     X, y = make_circles(1000, noise=0.03, random_state=42)
     return X, y
 
+
 def getDemoMultiClassData():
     NUM_CLASSES = 4
     NUM_FEATURES = 2
     RANDOM_SEED = 42
 
-    X_blob, y_blob = make_blobs(n_samples=1000, 
-                            n_features=NUM_FEATURES, 
-                            centers=NUM_CLASSES, 
-                            cluster_std=1.5, 
-                            random_state=RANDOM_SEED)
-    
+    X_blob, y_blob = make_blobs(
+        n_samples=1000,
+        n_features=NUM_FEATURES,
+        centers=NUM_CLASSES,
+        cluster_std=1.5,
+        random_state=RANDOM_SEED,
+    )
+
     return X_blob, y_blob
+
+
+def readCsvFile(path):
+    current_path = os.getcwd()
+    print("Current path:", current_path)
+    return np.genfromtxt("../config/data/multiclass.csv", delimiter=",", skip_header=True)
+
+
+def isAllNumerical(data):
+    return np.all(np.isreal(data))
+
+
+def getExpectedLastLayerNeurons(data):
+    return data if data > 2 else data - 1

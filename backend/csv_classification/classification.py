@@ -28,3 +28,4 @@ def configure_training_params(config:dict[str, str], model):
         loss_fn = nn.CrossEntropyLoss()
 
     return  optimizer, loss_fn
+    
