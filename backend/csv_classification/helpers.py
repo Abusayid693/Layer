@@ -64,7 +64,7 @@ def getDemoMultiClassData():
 def readCsvFile(path):
     current_path = os.getcwd()
     print("Current path:", current_path)
-    return np.genfromtxt("../config/data/multiclass.csv", delimiter=",", skip_header=True)
+    return np.genfromtxt("./demo/multiclass.csv", delimiter=",", skip_header=True)
 
 
 def isAllNumerical(data):

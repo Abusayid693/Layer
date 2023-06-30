@@ -37,7 +37,7 @@ async def train_csv_classification(config, data, label, task_queue):
     saveModelStateDict(config["name"], model)
 
     print("Model saved")
-    task_queue.task_done()
+   #  task_queue.task_done()
     print("Task removed")
     return ""
 

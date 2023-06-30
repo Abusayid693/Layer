@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+torch
+matplotlib
+numpy
+scikit-learn
+torchvision
+wheel
+coincurve
+redis
+celery
+flower
