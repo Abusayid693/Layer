@@ -4,7 +4,7 @@ import numpy as np
 from .constant import BINARY, MULTICLASS
 
 
-def processCsvData(config):
+async def processCsvData(config):
     data = readCsvFile("")
 
     rows, cols = data.shape
@@ -53,5 +53,7 @@ def processCsvData(config):
         )
 
     config["classification_type"] = MULTICLASS if (unique_labels.size > 2) else BINARY
+
+    print("Data proporcessed")
 
     return X_data, Y_data

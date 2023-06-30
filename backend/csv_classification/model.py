@@ -4,7 +4,7 @@ from .helpers import normalizePredictionsMulticlass, normalizePredictions
 import util
 
 
-def fit_model(config, model, loss_fn, optimizer, X_train, Y_train, X_test, Y_test):
+def fit_model(config, model, loss_fn, optimizer, train_dataloader, X_test, Y_test):
     torch.manual_seed(42)
 
     epochs = config["epochs"]
@@ -14,36 +14,37 @@ def fit_model(config, model, loss_fn, optimizer, X_train, Y_train, X_test, Y_tes
     test_loss_arr = []
 
     for epoch in range(epochs):
-        model.train()
+        for X_train, Y_train in train_dataloader:
+            model.train()
 
-        """
-        Raw logits out from model without normalization with sigmod or softmax
-        """
-        y_logits_train = model(X_train)
+            """
+            Raw logits out from model without normalization with sigmod or softmax
+            """
+            y_logits_train = model(X_train)
 
-        y_logits_train = (
-            y_logits_train.squeeze()
-            if config["classification_type"] == "binary"
-            else y_logits_train
-        )
+            y_logits_train = (
+                y_logits_train.squeeze()
+                if config["classification_type"] == "binary"
+                else y_logits_train
+            )
 
-        y_pred_train = (
-            normalizePredictions(y_logits_train)
-            if config["classification_type"] == "binary"
-            else normalizePredictionsMulticlass(y_logits_train)
-        )
+            y_pred_train = (
+                normalizePredictions(y_logits_train)
+                if config["classification_type"] == "binary"
+                else normalizePredictionsMulticlass(y_logits_train)
+            )
 
-        train_acc = util.calculate_accuracy(Y_train, y_pred_train)
+            train_acc = util.calculate_accuracy(Y_train, y_pred_train)
 
-        loss = loss_fn(y_logits_train, Y_train)
+            loss = loss_fn(y_logits_train, Y_train)
 
-        optimizer.zero_grad()
+            optimizer.zero_grad()
 
-        loss.backward()
+            loss.backward()
 
-        optimizer.step()
+            optimizer.step()
 
-        model.eval()
+            model.eval()
 
         with torch.inference_mode():
             y_test_logits = model(X_test)
@@ -74,3 +75,4 @@ def fit_model(config, model, loss_fn, optimizer, X_train, Y_train, X_test, Y_tes
                 print(
                     f"Epoch: {epoch} | Train Loss: {loss:.5f} | Train Acc: {train_acc} | Test Loss: {test_loss:.5f} | Test Acc: {test_acc} "
                 )
+    return
