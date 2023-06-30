@@ -4,7 +4,7 @@ import numpy as np
 from .constant import BINARY, MULTICLASS
 
 
-def processCsvData(config):
+async def verify_data_format(config):
     data = readCsvFile("")
 
     rows, cols = data.shape
@@ -51,9 +51,17 @@ def processCsvData(config):
             + ", but got "
             + str(config["layer_sizes"][last_layer_idx]),
         )
-
-    config["classification_type"] = MULTICLASS if (unique_labels.size > 2) else BINARY
-
     print("Data proporcessed")
 
-    return X_data, Y_data
+    return
+
+def getDataFromCSV(config):
+     data = readCsvFile("")
+     X_data = data[:, :-1]
+     Y_data = data[:, -1]
+
+     unique_labels = np.unique(Y_data)
+
+     config["classification_type"] = MULTICLASS if (unique_labels.size > 2) else BINARY
+
+     return X_data, Y_data, config

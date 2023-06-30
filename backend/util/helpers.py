@@ -3,6 +3,7 @@ import numpy as np
 import torch
 from torch import nn
 
+
 def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Tensor):
     """Plots decision boundaries of model predicting on X in comparison to y.
 
@@ -40,22 +41,22 @@ def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Ten
 
 
 def plot_train_graph(x, y_train, y_test):
-    
     plt.figure(figsize=(10, 7))
-    
+
     plt.plot(x, y_train, color="red", label="Train Loss")
-    
+
     # plot test loss
     plt.plot(x, y_test, color="green", label="Test Loss")
-    
+
     plt.title("Training and test loss curves")
     plt.ylabel("Loss")
     plt.xlabel("Epochs")
     plt.legend()
-    
-def calculate_accuracy(y_true, y_pred):   
+
+
+def calculate_accuracy(y_true, y_pred):
     correct = torch.eq(y_true, y_pred).sum().item()
-    acc = (correct / len(y_pred)) * 100    
+    acc = (correct / len(y_pred)) * 100
     return acc
 
 
@@ -75,3 +76,15 @@ def getDemoMultiClassCSVData():
         comments="",
         fmt="%.8f",
     )
+
+
+def getPresetConfigurations():
+    return {
+        "name": "user11",
+        "optimizer": "sgd",
+        "classification_type": "binary",
+        "learning_rate": 0.1,
+        "epochs": 500,
+        "layer_sizes": [2, 8, 8, 4],
+        "batch_size": 32,
+    }

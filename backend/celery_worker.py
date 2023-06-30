@@ -15,25 +15,9 @@ def create_task(a, b, c):
     time.sleep(a)
     return b + c
 
-config = {
-    "name": "user11111",
-    "optimizer": "sgd",
-    "classification_type": "binary",
-    "learning_rate": 0.1,
-    "epochs": 500,
-    "layer_sizes": [2, 8, 8, 4],
-    "batch_size": 32,
-}
-
-def func():
-    np.array([1, 2, 3])
-    data, label = csv_classification.processCsvData(config)
-    print("processCsvData ended")
-    csv_classification.train_csv_classification(config, data, label)
-    print("csv_classification ended")
-    return "OK"
 
 @celery.task(name="addCsvClassificationTask")
-def addCsvClassificationTask():
-    func()
-    return 5 + 10
+def addCsvClassificationTask(config):
+    data, label, config = csv_classification.getDataFromCSV(config)
+    csv_classification.train_csv_classification(config, data, label)
+    return "OK"

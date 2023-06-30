@@ -9,7 +9,6 @@ import celery
 from .helpers import getDemoBinaryData, getDemoMultiClassData, saveModelStateDict
 from .classification import CSVClassificationMo, configure_training_params
 from .model import fit_model
-from .preprocess import processCsvData
 
 
 def train_csv_classification(config, data, label):

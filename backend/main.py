@@ -1,26 +1,16 @@
 from fastapi import FastAPI
 import uvicorn
 import csv_classification
-from fastapi import BackgroundTasks, FastAPI
+from fastapi import FastAPI, Request
 import asyncio
 from celery_worker import create_task, addCsvClassificationTask
 from fastapi.responses import JSONResponse
+import util
+
 processing_tasks = False
 
 task_queue = asyncio.Queue()
 app = FastAPI()
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-config = {
-    "name": "user11",
-    "optimizer": "sgd",
-    "classification_type": "binary",
-    "learning_rate": 0.1,
-    "epochs": 500,
-    "layer_sizes": [2, 8, 8, 4],
-    "batch_size": 32,
-}
 
 
 @app.get("/api/test")
@@ -32,32 +22,22 @@ def run_task():
     return JSONResponse({"Result": "processing"})
 
 
-@app.get("/api/login")
-def run_task():
-    return JSONResponse({"Result": "Login successfull"})
-
 @app.get("/api/hello")
-async def hello(background_tasks: BackgroundTasks):
-
-    data, label =  await csv_classification.processCsvData(config)
-
-    await csv_classification.train_csv_classification(config, data, label)
-
+async def hello():
+    config = util.getPresetConfigurations()
+    await csv_classification.verify_data_format(config)
+    data, label, config = csv_classification.getDataFromCSV(config)
+    csv_classification.train_csv_classification(config, data, label)
     return {"message": "Training started in the background. "}
 
 
-@app.get("/api/csv")
-async def hello():
-    # data, label =  await csv_classification.processCsvData(config)
+@app.post("/api/csv")
+async def hello(request: Request):
+    config_data = await request.json()
+    await csv_classification.verify_data_format(config_data)
 
-    addCsvClassificationTask.delay()
-
+    addCsvClassificationTask.delay(config_data)
     return {"message": "Training started in the background."}
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f"Hi, {name}")  # Press ⌘F8 to toggle the breakpoint.
 
 
 # Press the green button in the gutter to run the script.
