@@ -7,3 +7,6 @@ scikit-learn
 torchvision
 wheel
 coincurve
+redis
+celery
+flower
