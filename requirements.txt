@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pytorch
+matplotlib
+numpy
+scikit-learn
