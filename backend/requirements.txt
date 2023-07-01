@@ -13,3 +13,4 @@ flower
 sqlalchemy
 python-dotenv
 psycopg2
+bcrypt==3.2.0

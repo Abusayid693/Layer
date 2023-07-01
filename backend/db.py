@@ -25,3 +25,12 @@ def get_db():
         print("An error occurred in get_db:", str(e))
     finally:
         db.close()
+
+def get_static_session():
+    db = SessionLocal()
+    try:
+        return db
+    except SQLAlchemyError as e:
+        print("An error occurred in get_static_session:", str(e))
+    finally:
+        db.close()
