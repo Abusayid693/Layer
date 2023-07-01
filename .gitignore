@@ -1,2 +1,4 @@
 __pycache__
 Models
+env.py
+.env

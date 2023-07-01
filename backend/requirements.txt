@@ -10,3 +10,6 @@ coincurve
 redis
 celery
 flower
+sqlalchemy
+python-dotenv
+psycopg2
