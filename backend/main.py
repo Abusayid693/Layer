@@ -2,37 +2,20 @@ from fastapi import FastAPI
 import uvicorn
 import csv_classification
 from fastapi import FastAPI, Request
-import asyncio
 from celery_worker import create_task, addCsvClassificationTask
 from fastapi.responses import JSONResponse
 import util
 from dotenv import load_dotenv
-import model
-from db import engine, SessionLocal
-from sqlalchemy.orm import Session
-from fastapi import Depends
-import crud
-
+from db import engine, Base
+import user_route
 
 load_dotenv()
 
-model.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-@app.get("/api/db")
-async def create(db: Session = Depends(get_db)):
-    crud.create_book(db)
-    return JSONResponse({"Result": "Book inserted"})
+app.include_router(user_route.router, prefix="/auth", tags=["auth"])
 
 @app.get("/api/test")
 def run_task():

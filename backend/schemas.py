@@ -4,7 +4,6 @@ from pydantic.generics import GenericModel
 
 T = TypeVar('T')
 
-
 class BookSchema(BaseModel):
     id: Optional[int] = None
     title: Optional[str] = None
