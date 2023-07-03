@@ -5,7 +5,7 @@ from celery import Celery
 from kombu.serialization import register, registry
 import numpy as np
 
-celery = Celery(__name__)
+celery = Celery(__name__,  broker_connection_retry_on_startup=True)
 celery.conf.broker_url = "redis://redis:6379/0"
 celery.conf.result_backend = "redis://redis:6379/0"
 
