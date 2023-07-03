@@ -3,12 +3,12 @@ import sklearn
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
 from torch.utils.data import TensorDataset
-from fastapi import BackgroundTasks, FastAPI
-import asyncio
-import celery
-from .helpers import getDemoBinaryData, getDemoMultiClassData, saveModelStateDict
+from fastapi import FastAPI
+from .helpers import saveModelStateDict
 from .classification import CSVClassificationMo, configure_training_params
 from .model import fit_model
+from db_models.saved_models.controller import update_model_db_instance
+import db
 
 
 def train_csv_classification(config, data, label):
@@ -36,4 +36,14 @@ def train_csv_classification(config, data, label):
     saveModelStateDict(config["name"], model)
 
     print("Model saved")
-    return {"tes":"complete"}
+
+    update_model_db_instance(
+        db.get_static_session(),
+        {
+            "id": config["training_instance_id"],
+            "status": "Success",
+            "message": "Training successfully completed",
+        },
+    )
+
+    return {"tes": "complete"}

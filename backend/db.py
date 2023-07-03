@@ -23,6 +23,7 @@ def get_db():
         yield db
     except SQLAlchemyError as e:
         print("An error occurred in get_db:", str(e))
+        db.rollback()
     finally:
         db.close()
 
@@ -32,5 +33,6 @@ def get_static_session():
         return db
     except SQLAlchemyError as e:
         print("An error occurred in get_static_session:", str(e))
+        db.rollback()
     finally:
         db.close()
