@@ -8,6 +8,8 @@ import util
 from dotenv import load_dotenv
 from db import engine, Base
 import user_route
+import routes
+
 
 load_dotenv()
 
@@ -16,6 +18,8 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 app.include_router(user_route.router, prefix="/auth", tags=["auth"])
+
+app.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
 
 @app.get("/api/test")
 def run_task():

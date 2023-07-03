@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String
 from db import Base, get_static_session
-from sqlalchemy.orm import validates
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import validates, relationship
 import bcrypt
+from db_models.saved_models.model import *
 
 class User(Base):
     __tablename__ = "user"
@@ -11,6 +11,8 @@ class User(Base):
     name = Column(String(50))
     email = Column(String(50), unique=True)
     password = Column(String(200), nullable=False)
+
+    saved_model = relationship("SavedModel", back_populates="user")
 
     @validates("name")
     def validate_name(self, key, name):

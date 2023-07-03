@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from db_models.user import User
-from db_models.schema import UserSchema, LoginRequest
+from db_models.user.user import User
+from db_models.user.schema import UserSchema, LoginRequest
 from fastapi.responses import JSONResponse
 
 def create_user(db: Session, data: UserSchema):

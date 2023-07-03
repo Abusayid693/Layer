@@ -4,7 +4,7 @@ from db import engine, SessionLocal
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from .helper import create_user, login_user
-from db_models.schema import Request, LoginRequest
+from db_models.user.schema import Request, LoginRequest
 import db
 
 router = APIRouter()
