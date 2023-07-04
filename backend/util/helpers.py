@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torch import nn
+from schemas import Response
+from fastapi.responses import JSONResponse
 
 
 def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Tensor):
@@ -88,3 +90,28 @@ def getPresetConfigurations():
         "layer_sizes": [2, 8, 8, 4],
         "batch_size": 32,
     }
+
+
+def handle_exception(exc):
+    if hasattr(exc, "status_code"):
+        status_code = exc.status_code
+    else:
+        status_code = 500
+
+    if hasattr(exc, "detail"):
+        detail = exc.detail
+    else:
+        print("[Exepction: " + str(exc) + " ]")
+        detail = "Something went wrong"
+
+    content = {"code": status_code, "status": "Error", "message": detail}
+
+    return JSONResponse(status_code=status_code, content=content)
+
+
+def handle_response(status_code: int, data):
+    status_code = status_code if status_code is not None else 200
+
+    content = {"code": status_code, "status": "success", "data": data}
+
+    return JSONResponse(status_code=status_code, content=content)

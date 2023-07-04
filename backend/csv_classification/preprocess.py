@@ -1,13 +1,13 @@
-from fastapi import FastAPI, HTTPException
-from .helpers import readCsvFile, isAllNumerical, getExpectedLastLayerNeurons
+from fastapi import  HTTPException
+from .helpers import isAllNumerical, getExpectedLastLayerNeurons, getCsvFileBufferFromPath
 import numpy as np
 from .constant import BINARY, MULTICLASS
 
 
 async def verify_data_format(config):
-    data = readCsvFile("")
+    data = getCsvFileBufferFromPath(config["training_dataset_key"])
 
-    rows, cols = data.shape
+    _, cols = data.shape
 
     if cols < 2:
         raise HTTPException(status_code=404, detail="Minimum 2 cols in csv")
@@ -16,7 +16,7 @@ async def verify_data_format(config):
         raise HTTPException(
             status_code=404,
             detail="Invaild first layer size, expected "
-            + cols - 1
+            + str(cols - 1)
             + ", but got "
             + str(config["layer_sizes"][0])
         )
@@ -27,7 +27,7 @@ async def verify_data_format(config):
             status_code=404, detail="Invalid data, all csv values must be numericals"
         )
 
-    X_data = data[:, :-1]
+    # Only last
     Y_data = data[:, -1]
 
     unique_labels = np.unique(Y_data)
@@ -56,7 +56,7 @@ async def verify_data_format(config):
     return
 
 def getDataFromCSV(config):
-     data = readCsvFile("")
+     data = getCsvFileBufferFromPath(config["training_dataset_key"])
      X_data = data[:, :-1]
      Y_data = data[:, -1]
 
