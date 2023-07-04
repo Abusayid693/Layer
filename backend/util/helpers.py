@@ -1,9 +1,13 @@
+import io
+import secrets
+
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from torch import nn
-from schemas import Response
+from config.s3 import AWS_BUCKET, s3
 from fastapi.responses import JSONResponse
+from schemas import Response
+from torch import nn
 
 
 def plot_decision_boundary(model: torch.nn.Module, X: torch.Tensor, y: torch.Tensor):
@@ -115,3 +119,18 @@ def handle_response(status_code: int, data):
     content = {"code": status_code, "status": "success", "data": data}
 
     return JSONResponse(status_code=status_code, content=content)
+
+def generateKeyForS3(name:str):
+    random_string = secrets.token_hex(8)
+    unique_key = f"{name}{random_string}"
+    return unique_key
+    
+
+def saveModelToS3(object_key:str, state_dict):
+    buffer = io.BytesIO()
+    torch.save(state_dict, buffer)
+    buffer.seek(0)
+
+    s3.upload_fileobj(buffer, AWS_BUCKET, object_key + ".pth")
+
+    buffer.close()

@@ -1,14 +1,12 @@
+import db
 import torch
-import sklearn
+import util
+from db_models.saved_models.controller import update_model_db_instance
 from sklearn.model_selection import train_test_split
-from torch.utils.data import DataLoader
-from torch.utils.data import TensorDataset
-from fastapi import FastAPI
-from .helpers import saveModelStateDict
+from torch.utils.data import DataLoader, TensorDataset
+
 from .classification import CSVClassificationMo, configure_training_params
 from .model import fit_model
-from db_models.saved_models.controller import update_model_db_instance
-import db
 
 
 def train_csv_classification(config, data, label):
@@ -33,14 +31,18 @@ def train_csv_classification(config, data, label):
 
     print("fit_model complete")
 
-    saveModelStateDict(config["name"], model)
+    model_upload_key = util.generateKeyForS3(config["name"])
 
-    print("Model saved")
+    # saveModelStateDict(config["name"], model)
+    util.saveModelToS3(object_key=model_upload_key, state_dict=model.state_dict())
+
+    print("Model saved in s3")
 
     update_model_db_instance(
         db.get_static_session(),
         {
             "id": config["training_instance_id"],
+            "model_url": model_upload_key,
             "status": "Success",
             "message": "Training successfully completed",
         },
