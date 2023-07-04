@@ -1,11 +1,12 @@
 import torch
 import torch.nn as nn
 from pathlib import Path
-import sklearn
 from sklearn.datasets import make_blobs
 from sklearn.datasets import make_circles
 import numpy as np
 import os
+from config.s3 import s3, AWS_BUCKET
+from io import BytesIO
 
 
 def getSequentialLayer(layer_sizes: list[int]):
@@ -66,6 +67,12 @@ def readCsvFile(path):
     print("Current path:", current_path)
     return np.genfromtxt("./demo/multiclass.csv", delimiter=",", skip_header=True)
 
+def getCsvFileBufferFromPath(file_key):
+    response = s3.get_object(Bucket=AWS_BUCKET, Key=file_key)
+    file_data = response['Body'].read()
+    buffer = BytesIO(file_data)
+    np_array = np.genfromtxt(buffer, delimiter=',', skip_header=True)
+    return np_array
 
 def isAllNumerical(data):
     return np.all(np.isreal(data))
