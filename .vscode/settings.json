@@ -1,5 +1,8 @@
 {
     "json.schemaDownload.enable": true,
     "python.defaultInterpreterPath": "/Users/rehanchoudhury/anaconda3/envs/layer3/bin/python",
-    "python.terminal.activateEnvironment": true
+    "python.terminal.activateEnvironment": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
 }

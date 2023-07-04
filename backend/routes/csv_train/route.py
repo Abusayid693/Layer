@@ -1,15 +1,11 @@
-from fastapi import APIRouter, HTTPException, Path, Request
 import csv_classification
-from celery_worker import addCsvClassificationTask
-from sqlalchemy.orm import Session
-from fastapi import Depends
-from db_models.saved_models.schema import SavedModelSchema
 import db
+from celery_worker import addCsvClassificationTask
 from db_models.saved_models.controller import create_model_db_instance
-from csv_classification.helpers import getCsvFileBufferFromPath
+from db_models.saved_models.schema import SavedModelSchema
+from fastapi import APIRouter, Depends, Request
+from sqlalchemy.orm import Session
 from util import handle_exception, handle_response
-from fastapi.responses import JSONResponse
-from schemas import Response
 
 csv_router = APIRouter()
 
@@ -33,13 +29,3 @@ async def hello(request: Request, db: Session = Depends(db.get_db)):
         )
     except Exception as e:
         return handle_exception(e)
-
-
-@csv_router.post("/download-csv")
-async def hello(request: Request):
-    try:
-        cols = getCsvFileBufferFromPath("multiclass.csv")
-        return {"message": "Training started in the background, cols: " + str(cols)}
-
-    except Exception as e:
-        return {"message": "Somethin went wrong : " + str(e)}

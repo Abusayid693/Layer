@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
+
 from .model import SavedModel
 from .schema import SavedModelSchema
-from fastapi.responses import JSONResponse
+
 
 def create_model_db_instance(db: Session, data: SavedModelSchema):
     _model = SavedModel(name=data.name, user_id=data.user_id, status="pending", message="Training not started yet")

@@ -7,7 +7,6 @@ from fastapi.responses import JSONResponse
 import util
 from dotenv import load_dotenv
 from db import engine, Base
-import user_route
 import routes
 
 load_dotenv()
@@ -16,13 +15,12 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.include_router(user_route.router, prefix="/auth", tags=["auth"])
+app.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
 
 app.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
 
 
-@app.exception_handler(Exception)
-async def handle_exception(request, exc):
+def handle_exception(request, exc):
     if hasattr(exc, "status_code"):
         status_code = exc.status_code
     else:

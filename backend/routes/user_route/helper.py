@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from db_models.user.user import User
 from db_models.user.schema import UserSchema, LoginRequest
-from fastapi.responses import JSONResponse
+from fastapi import  HTTPException
 
 def create_user(db: Session, data: UserSchema):
     _user = User(name=data.name, email=data.email, password=data.password)
@@ -15,4 +15,4 @@ def login_user(db:Session, data:LoginRequest):
     if user and user.compare_password(data.password):
         return {"token":"sdsdnsj"}
     else:
-        raise ValueError("Invalid crediantials")
+        raise HTTPException(status_code=401, detail="Invalid crediantials")
