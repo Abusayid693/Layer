@@ -27,14 +27,26 @@ def train_csv_classification(config, data, label):
 
     optimizer, loss_fn = configure_training_params(config, model)
 
-    fit_model(config, model, loss_fn, optimizer, data_loader, X_test, Y_test)
+    (
+        train_loss_arr,
+        test_loss_arr,
+        train_acc_arr,
+        test_acc_arr,
+        train_epochs,
+    ) = fit_model(config, model, loss_fn, optimizer, data_loader, X_test, Y_test)
 
     print("fit_model complete")
 
-    model_upload_key = util.generateKeyForS3(config["name"])
-
     # saveModelStateDict(config["name"], model)
+    model_upload_key = util.generateKeyForS3(config["name"])
     util.saveModelToS3(object_key=model_upload_key, state_dict=model.state_dict())
+
+    loss_graph_url = util.saveTrainTestGraphInS3(
+        train_epochs, train_loss_arr, test_loss_arr, config["name"] + "loss_graph"
+    )
+    acc_graph_url = util.saveTrainTestGraphInS3(
+        train_epochs, train_acc_arr, test_acc_arr, config["name"] + "acc_graph"
+    )
 
     print("Model saved in s3")
 
@@ -42,7 +54,9 @@ def train_csv_classification(config, data, label):
         db.get_static_session(),
         {
             "id": config["training_instance_id"],
-            "model_url": model_upload_key,
+            "model_url": model_upload_key + ".pth",
+            "accuracy_graph_url": acc_graph_url,
+            "train_loss_graph_url": loss_graph_url,
             "status": "Success",
             "message": "Training successfully completed",
         },

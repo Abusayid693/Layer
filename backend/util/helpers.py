@@ -134,3 +134,28 @@ def saveModelToS3(object_key:str, state_dict):
     s3.upload_fileobj(buffer, AWS_BUCKET, object_key + ".pth")
 
     buffer.close()
+
+def saveTrainTestGraphInS3(epochs, y_train, y_test, name):
+    plt.figure(figsize=(10, 7))
+
+    plt.plot(epochs, y_train, color="red", label="Train Loss")
+
+    plt.plot(epochs, y_test, color="green", label="Test Loss")
+
+    plt.title("Training and test loss curves")
+    plt.ylabel("Loss")
+    plt.xlabel("Epochs")
+    plt.legend()
+
+    buffer = io.BytesIO()
+
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+
+    object_key = generateKeyForS3(name) + ".png"
+
+    s3.upload_fileobj(buffer, AWS_BUCKET, object_key)
+
+    buffer.close()
+
+    return object_key

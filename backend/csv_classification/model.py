@@ -1,7 +1,8 @@
 import torch
-from torch import nn
-from .helpers import normalizePredictionsMulticlass, normalizePredictions
 import util
+from torch import nn
+
+from .helpers import normalizePredictions, normalizePredictionsMulticlass
 
 
 def fit_model(config, model, loss_fn, optimizer, train_dataloader, X_test, Y_test):
@@ -10,8 +11,12 @@ def fit_model(config, model, loss_fn, optimizer, train_dataloader, X_test, Y_tes
     epochs = config["epochs"]
 
     train_epochs = []
+
     train_loss_arr = []
     test_loss_arr = []
+
+    train_acc_arr = []
+    test_acc_arr = []
 
     for epoch in range(epochs):
         for X_train, Y_train in train_dataloader:
@@ -69,10 +74,12 @@ def fit_model(config, model, loss_fn, optimizer, train_dataloader, X_test, Y_tes
                 train_epochs.append(epoch)
 
                 train_loss_arr.append(loss.item())
-
                 test_loss_arr.append(test_loss.item())
+
+                train_acc_arr.append(train_acc)
+                test_acc_arr.append(test_acc)
 
                 print(
                     f"Epoch: {epoch} | Train Loss: {loss:.5f} | Train Acc: {train_acc} | Test Loss: {test_loss:.5f} | Test Acc: {test_acc} "
                 )
-    return
+    return train_loss_arr, test_loss_arr, train_acc_arr, test_acc_arr, train_epochs
