@@ -26,3 +26,6 @@ class Response(GenericModel, Generic[T]):
     status: str
     message: str
     result: Optional[T]
+    
+    def __dict__(self):
+        return {"code": self.code, "status": self.status, "message": self.message, "result": self.result}

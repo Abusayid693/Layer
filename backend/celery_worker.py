@@ -1,4 +1,3 @@
-import os
 import time
 import csv_classification
 from celery import Celery, states

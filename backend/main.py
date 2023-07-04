@@ -10,7 +10,6 @@ from db import engine, Base
 import user_route
 import routes
 
-
 load_dotenv()
 
 Base.metadata.create_all(bind=engine)
@@ -20,6 +19,22 @@ app = FastAPI()
 app.include_router(user_route.router, prefix="/auth", tags=["auth"])
 
 app.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
+
+
+@app.exception_handler(Exception)
+async def handle_exception(request, exc):
+    if hasattr(exc, "status_code"):
+        status_code = exc.status_code
+    else:
+        status_code = 500
+
+    if hasattr(exc, "message"):
+        message = exc.message
+    else:
+        message = "Internal Server Error"
+
+    return JSONResponse(status_code=status_code, content={"message": message})
+
 
 @app.get("/api/test")
 def run_task():
