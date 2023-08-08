@@ -2,3 +2,6 @@ __pycache__
 Models
 env.py
 .env
+.ipynb_checkpoints
+FashionMNIST
+.DS_Store
