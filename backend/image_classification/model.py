@@ -55,6 +55,7 @@ def fit_model(config, model, loss_fn, optimizer, train_dataloader, test_data_loa
     train_acc /= len(train_dataloader)
     
     train_loss_arr.append(train_loss.item())
+    train_acc_arr.append(train_acc)
     
     print(f"Train loss for {epoch}: {train_loss} | Train acc: {train_acc}")
     
@@ -79,6 +80,8 @@ def fit_model(config, model, loss_fn, optimizer, train_dataloader, test_data_loa
         test_acc/=len(test_dataloader)
         
         test_loss_arr.append(test_loss.item())
+        test_acc_arr.append(test_acc)
+        
         
         print(f"Test loss for {epoch}: {test_loss}, Test acc: {test_acc}")
         

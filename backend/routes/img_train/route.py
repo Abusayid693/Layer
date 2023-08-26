@@ -14,8 +14,10 @@ async def create(request: Request, db: Session = Depends(db.get_db)):
     try:
         config_data = await request.json()
 
+        config_data["name"] = config_data["name"] + " image classification"
+
         dict_data = {
-            "name": config_data["name"] + " image classification",
+            "name": config_data["name"],
             "user_id": config_data["user_id"],
         }
         dict = SavedModelSchema(**dict_data)

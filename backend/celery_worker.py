@@ -65,12 +65,13 @@ def addImageClassificationTask(config, training_instance_id):
         dataset =  getZipFileFromAws(config["file_keys"], config["transform_size"])
         train_image_classification(dataset=dataset, config=config)
     except Exception as e:
+        print('e :', e)
         update_model_db_instance(  
             db.get_static_session(),
             {
                 "id": training_instance_id,
                 "status": states.FAILURE,
-                "message": "Celery failed to run task",
+                "message": e,
             },
         )
         raise Ignore()
