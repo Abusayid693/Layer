@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader, random_split
 
-from .classification import MobilenetModel, configure_training_params
+from .classification import MobilenetModel, configure_training_params, getModel
 from .model import fit_model
 
 
@@ -12,14 +12,12 @@ async def train_image_classification(dataset, config):
     test_size = len(dataset) - train_size 
 
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
-
-    print('train_dataset :', len(train_dataset), 'test_dataset :', len(test_dataset))
    
     train_data_loader = DataLoader(train_dataset, batch_size=config["batch_size"], shuffle=True)
     
     test_data_loader = DataLoader(test_dataset, batch_size=config["batch_size"], shuffle=True)
 
-    model = MobilenetModel(3)
+    model = getModel(model_name=config["model"], config=config)
 
     optimizer, loss_fn = configure_training_params(config, model)
 

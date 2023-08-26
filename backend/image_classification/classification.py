@@ -1,13 +1,12 @@
 import torch
 import torchvision.models as models
-import torchvision.transforms as transforms
-from PIL import Image
 from torch import nn
 
-# Tiny VVG model
+from .constant import MOBILE_NET, RESNET_18, RESNET_34, TINY_VVG
 
+
+# Tiny VVG model
 class VVGModelV2(nn.Module):
-    
     def __init__(self, input_shape, hidden_units, output_shape):
         super().__init__()
 
@@ -59,7 +58,7 @@ class VVGModelV2(nn.Module):
 def MobilenetModel(num_classes):
 
     print("Mobile Net Triggered")
-    
+
     mobilenet_v2 = models.mobilenet_v2(pretrained=True)
     num_classes = num_classes
     mobilenet_v2.classifier[1] = nn.Linear(mobilenet_v2.last_channel, num_classes)
@@ -75,4 +74,9 @@ def configure_training_params(config:dict[str, str], model):
     loss_fn = nn.CrossEntropyLoss()
 
     return  optimizer, loss_fn
-    
+
+def getModel(model_name, config):
+    if model_name == MOBILE_NET:
+        return MobilenetModel(config["num_classes"])
+    return MobilenetModel(config["num_classes"])
+

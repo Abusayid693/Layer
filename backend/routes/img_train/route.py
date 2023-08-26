@@ -13,7 +13,7 @@ async def create(request: Request, db: Session = Depends(db.get_db)):
     try:
        config_data = await request.json()
        print("getZipFileFromAws started")
-       dataset = await getZipFileFromAws()
+       dataset = await getZipFileFromAws(config_data["file_keys"])
        print("getZipFileFromAws ended")
        await train_image_classification(dataset=dataset, config=config_data)
        print("Image train")

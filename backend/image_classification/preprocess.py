@@ -8,7 +8,7 @@ from torch.utils.data import TensorDataset
 from torchvision import transforms
 
 
-async def getZipFileFromAws(file_keys=["pizza", "steak", "sushi"]):
+async def getZipFileFromAws(file_keys):
     data = []
     labels = []
 

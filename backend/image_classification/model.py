@@ -1,12 +1,10 @@
 import torch
 import util
-from torch import nn
 
 from .helpers import normalizePredictions
 
-epochs = 10
 
-async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, test_data_loader):
+async def fit_model(config, model, loss_fn, optimizer, train_dataloader, test_data_loader):
   train_epochs = []
   train_loss_arr = []
   test_loss_arr = []
@@ -17,7 +15,7 @@ async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, 
  
   test_dataloader = test_data_loader
 
-  for epoch in range(epochs):
+  for epoch in range(config["epochs"]):
     
     train_loss = 0
     train_acc = 0
@@ -29,9 +27,9 @@ async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, 
     for batch, (X, Y) in enumerate(train_dataloader):
     
         
-        mobilenet_v2.train()
+        model.train()
         
-        y_logits_train = mobilenet_v2(X)
+        y_logits_train = model(X)
         
         loss = loss_fn(y_logits_train, Y)
         
@@ -47,7 +45,7 @@ async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, 
         
         optimizer.step()
         
-        mobilenet_v2.eval()
+        model.eval()
         
         if batch % 10 == 0:
             print(f"batch : {batch}")
@@ -67,7 +65,7 @@ async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, 
     with torch.inference_mode():
         for X_test, Y_test in test_dataloader:
             
-            y_logits_test = mobilenet_v2(X_test)
+            y_logits_test = model(X_test)
         
             test_loss = loss_fn(y_logits_test, Y_test)
             
