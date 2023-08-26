@@ -4,7 +4,7 @@ from .classification import MobilenetModel, configure_training_params, getModel
 from .model import fit_model
 
 
-async def train_image_classification(dataset, config):
+def train_image_classification(dataset, config):
 
     print("train_image_classification started")
 
@@ -27,7 +27,7 @@ async def train_image_classification(dataset, config):
         train_acc_arr,
         test_acc_arr,
         train_epochs,
-    ) = await fit_model(config, model, loss_fn, optimizer, train_data_loader, test_data_loader)
+    ) = fit_model(config, model, loss_fn, optimizer, train_data_loader, test_data_loader)
 
     print("train_image_classification ended")
     return ""

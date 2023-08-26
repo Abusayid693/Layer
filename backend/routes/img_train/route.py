@@ -1,7 +1,8 @@
 import db
+from celery_worker import addImageClassificationTask
+from db_models.saved_models.controller import create_model_db_instance
+from db_models.saved_models.schema import SavedModelSchema
 from fastapi import APIRouter, Depends, Request
-from image_classification.preprocess import getZipFileFromAws
-from image_classification.train import train_image_classification
 from sqlalchemy.orm import Session
 from util import handle_exception, handle_response
 
@@ -11,14 +12,21 @@ imageRouter = APIRouter()
 @imageRouter.post("/train")
 async def create(request: Request, db: Session = Depends(db.get_db)):
     try:
-       config_data = await request.json()
-       print("getZipFileFromAws started")
-       dataset = await getZipFileFromAws(config_data["file_keys"])
-       print("getZipFileFromAws ended")
-       await train_image_classification(dataset=dataset, config=config_data)
-       print("Image train")
-    except Exception as e:
-        print('e:', e)
-        return handle_exception(e)
-    return handle_response(status_code=201, data="training started")
+        config_data = await request.json()
 
+        dict_data = {
+            "name": config_data["name"] + " image classification",
+            "user_id": config_data["user_id"],
+        }
+        dict = SavedModelSchema(**dict_data)
+
+        training_instance_id = create_model_db_instance(db, data=dict)
+
+        addImageClassificationTask.delay(config_data, training_instance_id)
+
+    except Exception as e:
+        return handle_exception(e)
+    return handle_response(
+        status_code=200,
+        data="Training started in the background, id :" + str(training_instance_id),
+    )

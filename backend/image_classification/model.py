@@ -4,7 +4,7 @@ import util
 from .helpers import normalizePredictions
 
 
-async def fit_model(config, model, loss_fn, optimizer, train_dataloader, test_data_loader):
+def fit_model(config, model, loss_fn, optimizer, train_dataloader, test_data_loader):
   train_epochs = []
   train_loss_arr = []
   test_loss_arr = []
