@@ -56,13 +56,17 @@ class VVGModelV2(nn.Module):
         return x
     
 def MobilenetModel(num_classes):
-
-    print("Mobile Net Triggered")
-
     mobilenet_v2 = models.mobilenet_v2(pretrained=True)
     num_classes = num_classes
     mobilenet_v2.classifier[1] = nn.Linear(mobilenet_v2.last_channel, num_classes)
     return mobilenet_v2
+
+def ResnetModel(num_classes):
+    resnet_model = models.resnet18(pretrained=True)
+    num_features = resnet_model.fc.in_features
+    resnet_model.fc = nn.Linear(num_features, num_classes) 
+    return resnet_model
+
 
 def configure_training_params(config:dict[str, str], model):
 
@@ -86,6 +90,9 @@ def getModel(model_name, config):
           output_shape=config["num_classes"],
           flat_layer_units=config["transform_size"]//4
           )
+    
+    if model_name == RESNET_18:
+        return ResnetModel(config["num_classes"])
     
     return MobilenetModel(config["num_classes"])
 
