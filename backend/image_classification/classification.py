@@ -2,7 +2,8 @@ import torch
 from torch import nn
 
 from .constant import MOBILE_NET, RESNET_18, RESNET_34, TINY_VVG
-from .traning_models import MobilenetModel, ResnetModel, VVGModelV2
+from .traning_models import (MobilenetModel, ResnetModel18, ResnetModel34,
+                             VVGModelV2)
 
 
 def getModel(model_name, config):
@@ -18,7 +19,10 @@ def getModel(model_name, config):
           )
     
     if model_name == RESNET_18:
-        return ResnetModel(config["num_classes"])
+        return ResnetModel18(config["num_classes"])
+    
+    if model_name == RESNET_34:
+        return ResnetModel34(config["num_classes"])
     
     return MobilenetModel(config["num_classes"])
 
