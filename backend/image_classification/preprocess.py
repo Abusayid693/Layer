@@ -1,13 +1,11 @@
 import io
-import os
 import zipfile
-from io import BytesIO
 
 import torch
 from config.s3 import AWS_BUCKET, s3
 from PIL import Image
-from torch.utils.data import DataLoader, TensorDataset
-from torchvision import datasets, transforms
+from torch.utils.data import TensorDataset
+from torchvision import transforms
 
 
 async def getZipFileFromAws(file_keys=["pizza", "steak", "sushi"]):
@@ -21,7 +19,6 @@ async def getZipFileFromAws(file_keys=["pizza", "steak", "sushi"]):
     
      with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zip_ref:
         file_names = [name for name in zip_ref.namelist() if name.endswith('.jpg') and any(name.startswith(prefix) for prefix in file_keys)]
-        # print('file_names :', file_names)
         transform = transforms.Compose([
          transforms.Resize((128, 128)),
          transforms.ToTensor(),
