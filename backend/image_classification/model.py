@@ -6,7 +6,7 @@ from .helpers import normalizePredictions
 
 epochs = 10
 
-async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader):
+async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader, test_data_loader):
   train_epochs = []
   train_loss_arr = []
   test_loss_arr = []
@@ -15,7 +15,7 @@ async def fit_model(config, mobilenet_v2, loss_fn, optimizer, train_dataloader):
 
   test_acc_arr = []
  
-  test_dataloader = train_dataloader
+  test_dataloader = test_data_loader
 
   for epoch in range(epochs):
     
