@@ -7,7 +7,7 @@ from .constant import MOBILE_NET, RESNET_18, RESNET_34, TINY_VVG
 
 # Tiny VVG model
 class VVGModelV2(nn.Module):
-    def __init__(self, input_shape, hidden_units, output_shape):
+    def __init__(self, input_shape, hidden_units, output_shape, flat_layer_units):
         super().__init__()
 
         self.conv_block_1 = nn.Sequential(
@@ -46,7 +46,7 @@ class VVGModelV2(nn.Module):
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(in_features=hidden_units*56*56, out_features=output_shape),
+            nn.Linear(in_features=hidden_units*flat_layer_units*flat_layer_units, out_features=output_shape),
         )
         
     def forward(self, x):
@@ -78,5 +78,14 @@ def configure_training_params(config:dict[str, str], model):
 def getModel(model_name, config):
     if model_name == MOBILE_NET:
         return MobilenetModel(config["num_classes"])
+    
+    if model_name == TINY_VVG:
+        return VVGModelV2(
+          input_shape=3,
+          hidden_units=20,
+          output_shape=config["num_classes"],
+          flat_layer_units=config["transform_size"]//4
+          )
+    
     return MobilenetModel(config["num_classes"])
 

@@ -62,7 +62,7 @@ def addImageClassificationTask(config, training_instance_id):
         )
         config["training_instance_id"] = training_instance_id
 
-        dataset =  getZipFileFromAws(config["file_keys"])
+        dataset =  getZipFileFromAws(config["file_keys"], config["transform_size"])
         train_image_classification(dataset=dataset, config=config)
     except Exception as e:
         update_model_db_instance(  

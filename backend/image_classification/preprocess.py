@@ -8,7 +8,7 @@ from torch.utils.data import TensorDataset
 from torchvision import transforms
 
 
-def getZipFileFromAws(file_keys):
+def getZipFileFromAws(file_keys, transform_size):
     data = []
     labels = []
 
@@ -20,7 +20,7 @@ def getZipFileFromAws(file_keys):
      with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zip_ref:
         file_names = [name for name in zip_ref.namelist() if name.endswith('.jpg') and any(name.startswith(prefix) for prefix in file_keys)]
         transform = transforms.Compose([
-         transforms.Resize((128, 128)),
+         transforms.Resize((transform_size, transform_size)),
          transforms.ToTensor(),
        ])
  
