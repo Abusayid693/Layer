@@ -1,13 +1,12 @@
-from fastapi import FastAPI
-import uvicorn
 import csv_classification
-from fastapi import FastAPI, Request
-from celery_worker import create_task, addCsvClassificationTask
-from fastapi.responses import JSONResponse
-import util
-from dotenv import load_dotenv
-from db import engine, Base
 import routes
+import util
+import uvicorn
+from celery_worker import addCsvClassificationTask, create_task
+from db import Base, engine
+from dotenv import load_dotenv
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 
@@ -19,6 +18,7 @@ app.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
 
 app.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
 
+app.include_router(routes.imageRouter, prefix="/image", tags=["image"])
 
 def handle_exception(request, exc):
     if hasattr(exc, "status_code"):
