@@ -5,3 +5,5 @@ env.py
 .ipynb_checkpoints
 FashionMNIST
 .DS_Store
+data 
+CIFAR10
