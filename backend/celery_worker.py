@@ -7,7 +7,6 @@ from celery.exceptions import Ignore
 from db_models.saved_models.controller import update_model_db_instance
 from image_classification.preprocess import getZipFileFromAws
 from image_classification.train import train_image_classification
-from kombu.serialization import register, registry
 
 celery = Celery(__name__, broker_connection_retry_on_startup=True)
 celery.conf.broker_url = "redis://redis:6379/0"

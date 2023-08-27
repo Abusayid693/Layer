@@ -5,7 +5,7 @@ from .schema import SavedModelSchema
 
 
 def create_model_db_instance(db: Session, data: SavedModelSchema):
-    _model = SavedModel(name=data.name, user_id=data.user_id, status="pending", message="Training not started yet")
+    _model = SavedModel(name=data.name, user_id=data.user_id, status="pending", classification_type=data.classification_type, message="Training not started yet")
     db.add(_model)
     db.commit()
     db.refresh(_model)

@@ -1,6 +1,8 @@
 import csv_classification
 import db
 from celery_worker import addCsvClassificationTask
+from config.constant import (CSV_MULTI_CLASS_CLASSIFICATION,
+                             CSV_SINGLE_CLASS_CLASSIFICATION)
 from db_models.saved_models.controller import create_model_db_instance
 from db_models.saved_models.schema import SavedModelSchema
 from fastapi import APIRouter, Depends, Request
@@ -17,7 +19,15 @@ async def hello(request: Request, db: Session = Depends(db.get_db)):
 
         await csv_classification.verify_data_format(config_data)
 
-        dict_data = {"name": config_data["name"], "user_id": config_data["user_id"]}
+        last_layer_idx = len(config_data["layer_sizes"]) - 1
+
+        dict_data = {
+            "name": config_data["name"],
+            "user_id": config_data["user_id"],
+            "classification_type": CSV_MULTI_CLASS_CLASSIFICATION
+            if config_data["layer_sizes"][last_layer_idx] > 1
+            else CSV_SINGLE_CLASS_CLASSIFICATION,
+        }
         dict = SavedModelSchema(**dict_data)
 
         training_instance_id = create_model_db_instance(db, data=dict)
