@@ -1,5 +1,6 @@
 import db
 from celery_worker import addImageClassificationTask
+from config.constant import IMAGE_CLASSIFICATION
 from db_models.saved_models.controller import create_model_db_instance
 from db_models.saved_models.schema import SavedModelSchema
 from fastapi import APIRouter, Depends, Request
@@ -19,6 +20,7 @@ async def create(request: Request, db: Session = Depends(db.get_db)):
         dict_data = {
             "name": config_data["name"],
             "user_id": config_data["user_id"],
+            "classification_type": IMAGE_CLASSIFICATION
         }
         dict = SavedModelSchema(**dict_data)
 

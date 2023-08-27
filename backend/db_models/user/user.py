@@ -12,7 +12,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50))
     email = Column(String(50), unique=True)
-    password = Column(String(200), nullable=False)
+    password = Column(String(200), nullable=False) 
 
     saved_model = relationship("SavedModel", back_populates="user")
 

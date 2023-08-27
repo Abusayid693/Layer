@@ -1,3 +1,5 @@
+import json
+
 import db
 import torch
 import util
@@ -59,6 +61,7 @@ def train_csv_classification(config, data, label):
             "train_loss_graph_url": loss_graph_url,
             "status": "Success",
             "message": "Training successfully completed",
+            "train_config": json.dumps(config)
         },
     )
 

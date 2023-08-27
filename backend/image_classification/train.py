@@ -1,3 +1,5 @@
+import json
+
 import db
 import util
 from db_models.saved_models.controller import update_model_db_instance
@@ -53,6 +55,7 @@ def train_image_classification(dataset, config):
             "train_loss_graph_url": loss_graph_url,
             "status": "Success",
             "message": "Training successfully completed",
+            "train_config": json.dumps(config)
         },
     )
 
