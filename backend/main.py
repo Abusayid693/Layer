@@ -7,12 +7,20 @@ from db import Base, engine
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from routes.middleware import check_permission
+from util import handle_response
 
 load_dotenv()
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+@app.middleware("http")
+async def check_authentication(request: Request, call_next):   
+    if not check_permission(request):
+        return handle_response(status_code=401, data="Unauthorized")
+    return await call_next(request)
 
 app.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
 
