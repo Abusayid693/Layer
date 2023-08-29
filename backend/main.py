@@ -14,19 +14,26 @@ load_dotenv()
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+publicApp = FastAPI(openapi_prefix="/app1")
 
-@app.middleware("http")
+restrictedApp = FastAPI(openapi_prefix="/app2")
+
+@restrictedApp.middleware("http")
 async def check_authentication(request: Request, call_next):   
     if not check_permission(request):
         return handle_response(status_code=401, data="Unauthorized")
     return await call_next(request)
 
-app.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
+app = FastAPI()
 
-app.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
+app.mount("/app1", publicApp)
+app.mount("/app2", restrictedApp)
 
-app.include_router(routes.imageRouter, prefix="/image", tags=["image"])
+publicApp.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
+
+restrictedApp.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
+
+restrictedApp.include_router(routes.imageRouter, prefix="/image", tags=["image"])
 
 def handle_exception(request, exc):
     if hasattr(exc, "status_code"):

@@ -21,7 +21,7 @@ def login_user(db: Session, data: LoginRequest):
 
     if user and user.compare_password(data.password):
         payload = {
-        "user_id": 123,
+        "user_id": user.id,
         "exp": datetime.datetime.utcnow()
         + datetime.timedelta(hours=100),  # Token expiration time
         }
