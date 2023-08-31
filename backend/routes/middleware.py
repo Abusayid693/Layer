@@ -14,11 +14,11 @@ def check_permission(request:Request):
         return False
     try:
      decoded_payload = jwt.decode(data, os.environ.get('JWT_SECRET'), algorithms=['HS256'])
-     print("Decoded Payload:", decoded_payload)
-
+     
      user = get_user_by_id(db.get_static_session(), decoded_payload["user_id"])
-    
-     print("Decoded Payload:", user)
+     if not user:
+        return False
+     request.state.auth_user = user.id
      return True
     except Exception as e:
       print("Token has expired: ", e)
