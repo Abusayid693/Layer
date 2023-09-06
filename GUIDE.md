@@ -18,12 +18,15 @@ docker-compose build --no-cache [<service_name>..]
 
 ## React native
 
-error: unable to attach DB
+1. error: unable to attach DB
 
 ```sh
 rm -rf ~/Library/Developer/Xcode/DerivedData/
 pod deintegrate
 pod update
 yarn run ios
-
 ```
+
+2. error: cannot find symbol import | ERROR Invariant Violation:
+
+execute `./gradlew clean` from the android folder
