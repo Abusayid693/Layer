@@ -14,8 +14,6 @@ padding: ${scaleSize(20)}px  ${scaleSize(0)}px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-
-
 `
 
 export const ContentText = styled.Text`

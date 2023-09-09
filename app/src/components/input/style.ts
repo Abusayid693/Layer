@@ -2,8 +2,12 @@ import styled from 'styled-components/native';
 import { scaleFont, scaleSize } from '../../util/mixins';
 
 
-export const Container = styled.View`
+export const Container = styled.View<{isGroup: boolean}>`
 margin: 5px 0;
+${({isGroup}) =>
+isGroup &&
+`flex: 1;
+`};
 `
 
 export const InputContainer = styled.TextInput<{isError:boolean}>`

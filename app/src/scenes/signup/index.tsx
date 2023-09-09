@@ -1,98 +1,74 @@
-import { useNavigation } from '@react-navigation/native';
-import type { PropsWithChildren } from 'react';
-import React from 'react';
-import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import * as Yup from 'yup';
+import * as S from './style';
+//
+import { FormOne } from './formOne';
+import { FormThree } from "./formThree";
+import { FormTwo } from './formTwo';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Stack = createNativeStackNavigator();
 
-const styles = StyleSheet.create({
-    sectionContainer: {
-      marginTop: 32,
-      paddingHorizontal: 24,
-    },
-    sectionTitle: {
-      fontSize: 24,
-      fontWeight: '600',
-    },
-    sectionDescription: {
-      marginTop: 8,
-      fontSize: 18,
-      fontWeight: '400',
-    },
-    highlight: {
-      fontWeight: '700',
-    },
-  });
+const validationSchema = [
+  Yup.object().shape({
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
+  }),
+  Yup.object().shape({
+    email: Yup.string().required('Required').email('Invalid email'),
+  }),
+  Yup.object().shape({
+    password: Yup.string().required('Required'),
+    confirmPassword: Yup.string()
+      .required('Required')
+      .oneOf([Yup.ref('password'), 'null'], 'Passwords must match'),
+  }),
+];
 
+export const SignUp = () => {
+  const [screenIndex, setScreenIndex] = useState(0);
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-export const SignUp = ()=> {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const onSubmit = (values: any) => {
+    if(screenIndex < 2){
+      setScreenIndex((prev)=> (prev+1))
+      return;
+    }
   };
 
-  const navigation = useNavigation();
+  const renderContent = () => {
+    if (screenIndex === 0) return <FormOne setScreenIndex={setScreenIndex} />;
+    if (screenIndex === 1) return <FormTwo setScreenIndex={setScreenIndex} />;
+    if (screenIndex === 2) return <FormThree setScreenIndex={setScreenIndex}/>
+  };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Signup">
-            Click here to signup
-          </Section>
-          <Button onPress={()=> navigation.navigate("Login" as never)} title='Login'/>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 35}
+      enabled
+      style={{flex: 1}}>
+      <S.Container
+        style={{
+          justifyContent: 'space-between',
+        }}>
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          initialErrors={{email: 'Required'}}
+          validationSchema={validationSchema[screenIndex]}
+          onSubmit={onSubmit}>
+          {({handleChange, handleBlur, handleSubmit, values}) =>
+            renderContent()
+          }
+        </Formik>
+      </S.Container>
+    </KeyboardAvoidingView>
   );
-}
+};
