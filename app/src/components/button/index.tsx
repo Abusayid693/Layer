@@ -1,39 +1,40 @@
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import ArrowIcon from './assets/arrow';
 import * as S from './style';
 
-export const Button = ({children, ...any}:any) => {
+export const Button = ({children, loading, ...any}: any) => {
   return (
-    <TouchableOpacity {...any}>
-    <S.Container>
+    <TouchableOpacity {...any} disabled={loading}>
+      <S.Container>
         {/* @ts-ignore */}
-        <S.ButtonText >{children}</S.ButtonText>
-    </S.Container>
+        {!loading && <S.ButtonText>{children}</S.ButtonText>}
+        {loading && <ActivityIndicator />}
+      </S.Container>
     </TouchableOpacity>
   );
 };
 
-export const ButtonLight = ({children, ...any}:any) => {
-    return (
-      <TouchableOpacity {...any}>
+export const ButtonLight = ({children, loading, ...any}: any) => {
+  return (
+    <TouchableOpacity {...any} disabled={loading}>
       <S.Container isLight>
-          {/* @ts-ignore */}
-          <S.ButtonText isLight>{children}</S.ButtonText>
+        {/* @ts-ignore */}
+        {!loading && <S.ButtonText isLight>{children}</S.ButtonText>}
+        {loading && <ActivityIndicator />}
       </S.Container>
-      </TouchableOpacity>
-    );
-  };
-  
+    </TouchableOpacity>
+  );
+};
 
 export const BackButton = ({...any}) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
-    <S.BackBtnContainer>
+    <TouchableOpacity onPress={() => navigation.goBack()} {...any}>
+      <S.BackBtnContainer>
         <ArrowIcon />
-    </S.BackBtnContainer>
+      </S.BackBtnContainer>
     </TouchableOpacity>
   );
 };
