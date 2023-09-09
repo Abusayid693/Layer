@@ -1,94 +1,57 @@
-import type { PropsWithChildren } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Formik } from 'formik';
 import React from 'react';
 import {
     SafeAreaView,
     ScrollView,
     StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
-    View,
+    useColorScheme
 } from 'react-native';
+import * as S from './style';
 
-import {
-    Colors
-} from 'react-native/Libraries/NewAppScreen';
+//
+import { FormOne } from './formOne';
+import { FormTwo } from './formTwo';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Stack = createNativeStackNavigator();
 
-const styles = StyleSheet.create({
-    sectionContainer: {
-      marginTop: 32,
-      paddingHorizontal: 24,
-    },
-    sectionTitle: {
-      fontSize: 24,
-      fontWeight: '600',
-    },
-    sectionDescription: {
-      marginTop: 8,
-      fontSize: 18,
-      fontWeight: '400',
-    },
-    highlight: {
-      fontWeight: '700',
-    },
-  });
-
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-export const Login = ()=> {
+export const Login = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: 'red',
   };
 
+  const navigation = useNavigation();
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
+    <SafeAreaView>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Login">
-            Click here to login
-          </Section>
-        </View>
+        contentContainerStyle={{height: '100%'}}>
+      
+        <S.Container>
+          <Formik
+            initialValues={{
+              email: 'abc@a.co',
+              password: '',
+              confirmPassword: '',
+            }}
+            onSubmit={values => console.log(values)}>
+            {({handleChange, handleBlur, handleSubmit, values}) => (
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                }}>
+                <Stack.Screen name="FormOne" component={FormOne} />
+                <Stack.Screen name="FormTwo" component={FormTwo} />
+              </Stack.Navigator>
+            )}
+          </Formik>
+        </S.Container>
       </ScrollView>
     </SafeAreaView>
   );
-}
+};

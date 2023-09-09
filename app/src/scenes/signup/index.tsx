@@ -1,6 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -9,7 +11,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
 import {
   Colors
 } from 'react-native/Libraries/NewAppScreen';
@@ -71,6 +72,8 @@ export const SignUp = ()=> {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -84,9 +87,10 @@ export const SignUp = ()=> {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Login">
-            Click here to login
+          <Section title="Signup">
+            Click here to signup
           </Section>
+          <Button onPress={()=> navigation.navigate("Login" as never)} title='Login'/>
         </View>
       </ScrollView>
     </SafeAreaView>
