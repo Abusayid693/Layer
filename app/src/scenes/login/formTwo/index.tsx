@@ -1,8 +1,11 @@
+import { useFormikContext } from 'formik';
 import React from 'react';
 import { BackButton, Button, Input } from '../../../components';
 import * as S from '../style';
 
 export const FormTwo = () => {
+  const {submitForm} = useFormikContext();
+
   return (
     <React.Fragment>
       <S.ContentContainer>
@@ -11,9 +14,7 @@ export const FormTwo = () => {
       </S.ContentContainer>
       <Input name="password" type="password" label="Password" />
       <Input name="confirmPassword" type="password" label="Confirm Password" />
-      <Button >
-        Submit
-      </Button>
+      <Button onPress={submitForm}>Submit</Button>
     </React.Fragment>
   );
 };

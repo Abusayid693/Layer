@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Formik } from 'formik';
 import React from 'react';
@@ -6,24 +5,31 @@ import {
     SafeAreaView,
     ScrollView,
     StatusBar,
-    useColorScheme
+    useColorScheme,
 } from 'react-native';
+import * as Yup from 'yup';
 import * as S from './style';
 
 //
 import { FormOne } from './formOne';
 import { FormTwo } from './formTwo';
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required('Required').email('Invalid email'),
+  password: Yup.string().required('Required'),
+  confirmPassword: Yup.string()
+    .required('Required')
+    .oneOf([Yup.ref('password'), 'null'], 'Passwords must match'),
+});
+
 const Stack = createNativeStackNavigator();
 
 export const Login = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: 'red',
+  const onSubmit = (values:any) => {
+    console.log('values :', values)
   };
-
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView>
@@ -31,15 +37,16 @@ export const Login = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={{height: '100%'}}>
-      
         <S.Container>
           <Formik
             initialValues={{
-              email: 'abc@a.co',
+              email: '',
               password: '',
               confirmPassword: '',
             }}
-            onSubmit={values => console.log(values)}>
+            initialErrors={{email: 'Required'}}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}>
             {({handleChange, handleBlur, handleSubmit, values}) => (
               <Stack.Navigator
                 screenOptions={{
