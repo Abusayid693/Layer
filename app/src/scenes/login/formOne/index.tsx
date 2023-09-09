@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { Button, Input } from '../../../components';
+import { Button, ButtonLight, Input } from '../../../components';
 import * as S from '../style';
 
 export const FormOne = () => {
@@ -27,6 +27,9 @@ export const FormOne = () => {
         }}>
         Next
       </Button>
+      <ButtonLight>
+        Sign up
+      </ButtonLight>
     </React.Fragment>
   );
 };

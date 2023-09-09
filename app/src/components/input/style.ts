@@ -14,11 +14,14 @@ border-radius: ${scaleSize(16)}px;
 font-size: ${scaleFont(17)}px;
 margin-bottom: ${scaleSize(5)}px;
 margin-top: ${scaleSize(10)}px;
-
 `
 
 export const Label = styled.Text`
 font-size: ${scaleFont(17)}px;
 font-weight: 600;
+`
 
+export const ErrorLabel = styled.Text`
+font-size: ${scaleFont(12)}px;
+color: red;
 `

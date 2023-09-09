@@ -3,16 +3,28 @@ import { TouchableOpacity } from 'react-native';
 import ArrowIcon from './assets/arrow';
 import * as S from './style';
 
-export const Button = ({children,...any}:any) => {
+export const Button = ({children, ...any}:any) => {
   return (
     <TouchableOpacity {...any}>
     <S.Container>
         {/* @ts-ignore */}
-        <S.ButtonText>{children}</S.ButtonText>
+        <S.ButtonText >{children}</S.ButtonText>
     </S.Container>
     </TouchableOpacity>
   );
 };
+
+export const ButtonLight = ({children, ...any}:any) => {
+    return (
+      <TouchableOpacity {...any}>
+      <S.Container isLight>
+          {/* @ts-ignore */}
+          <S.ButtonText isLight>{children}</S.ButtonText>
+      </S.Container>
+      </TouchableOpacity>
+    );
+  };
+  
 
 export const BackButton = ({...any}) => {
   const navigation = useNavigation();
