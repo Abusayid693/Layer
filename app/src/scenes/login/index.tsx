@@ -2,7 +2,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import * as Yup from 'yup';
+import { ACCESS_TOKEN_KEY } from "../../hoc/auth";
 import { login } from '../../services';
 import * as S from './style';
 //
@@ -31,6 +33,9 @@ export const Login = () => {
         password: 'gjgsjhbjbjhbj',
       });
       console.log('login :', data);
+    
+      await EncryptedStorage.setItem(ACCESS_TOKEN_KEY, data.data.token);
+
     } catch (error) {
       console.log('error :', error);
     }
