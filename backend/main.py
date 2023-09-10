@@ -31,9 +31,12 @@ app.mount("/app2", restrictedApp)
 
 publicApp.include_router(routes.userRouter, prefix="/auth", tags=["auth"])
 
+restrictedApp.include_router(routes.userRouterProtected, prefix="/user", tags=["user"])
+
 restrictedApp.include_router(routes.csv_router, prefix="/csv", tags=["auth"])
 
 restrictedApp.include_router(routes.imageRouter, prefix="/image", tags=["image"])
+
 
 def handle_exception(request, exc):
     if hasattr(exc, "status_code"):

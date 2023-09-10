@@ -16,6 +16,9 @@ class User(Base):
 
     saved_model = relationship("SavedModel", back_populates="user")
 
+    def json(self):
+        return {"name": self.name, "id": 2, "email": self.email}
+
     @validates("name")
     def validate_name(self, key, name):
         if len(name) < 3:

@@ -1,4 +1,5 @@
-from typing import List, Optional, TypeVar, Generic
+from typing import Generic, List, Optional, TypeVar
+
 from pydantic import BaseModel, Field
 from pydantic.generics import GenericModel
 
@@ -14,7 +15,7 @@ class UserSchema(BaseModel):
         orm_mode = True
 
 
-class Request(GenericModel, Generic[T]):
+class UserRequest(GenericModel, Generic[T]):
     name: str
     email: str
     password: str

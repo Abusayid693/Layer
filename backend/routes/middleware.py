@@ -18,7 +18,7 @@ def check_permission(request:Request):
      user = get_user_by_id(db.get_static_session(), decoded_payload["user_id"])
      if not user:
         return False
-     request.state.auth_user = user.id
+     request.state.auth_user = user["id"]
      return True
     except Exception as e:
       print("Token has expired: ", e)
