@@ -12,9 +12,9 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false,
+          // headerShown: false,
         }}>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login}  />
         <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>

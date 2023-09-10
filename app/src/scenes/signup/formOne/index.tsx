@@ -28,7 +28,7 @@ export const FormOne = ({setScreenIndex}:any) => {
         }}>
         Next
       </Button>
-      <ButtonLight>
+      <ButtonLight onPress={()=>navigation.navigate("Login" as never)}>
         Login
       </ButtonLight>
       </S.MainContainer>
