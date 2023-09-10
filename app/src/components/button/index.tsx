@@ -32,7 +32,7 @@ export const BackButton = ({...any}) => {
 
   return (
     <TouchableOpacity onPress={() => navigation.goBack()} {...any}>
-      <S.BackBtnContainer>
+      <S.BackBtnContainer >
         <ArrowIcon />
       </S.BackBtnContainer>
     </TouchableOpacity>

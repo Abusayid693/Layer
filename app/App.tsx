@@ -17,6 +17,7 @@ function App(): JSX.Element {
           screenOptions={
             {
               // headerShown: false,
+              headerBackVisible: false
             }
           }>
           <Stack.Screen name="Login" component={Login} />

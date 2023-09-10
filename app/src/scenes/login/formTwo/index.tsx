@@ -5,7 +5,7 @@ import { BackButton, Button, Input } from '../../../components';
 import * as S from '../style';
 
 export const FormTwo = ({setScreenIndex}:any) => {
-  const {submitForm} = useFormikContext();
+  const {submitForm, isSubmitting} = useFormikContext();
 
   return (
     <React.Fragment>
@@ -25,7 +25,7 @@ export const FormTwo = ({setScreenIndex}:any) => {
       </S.ContentContainer>
 
       <S.MainContainer>
-        <Button onPress={submitForm}>Submit</Button>
+        <Button loading={isSubmitting} onPress={submitForm}>Submit</Button>
       </S.MainContainer>
     </React.Fragment>
   );

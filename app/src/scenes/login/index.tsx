@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import * as Yup from 'yup';
+import { login } from '../../services';
 import * as S from './style';
 //
 import { FormOne } from './formOne';
@@ -21,8 +22,18 @@ const validationSchema = Yup.object().shape({
 export const Login = () => {
   const [screenIndex, setScreenIndex] = useState(0);
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
     console.log('values :', values);
+
+    try {
+      const {data} = await login({
+        email: 'hhhsdss@rean.com',
+        password: 'gjgsjhbjbjhbj',
+      });
+      console.log('login :', data);
+    } catch (error) {
+      console.log('error :', error);
+    }
   };
 
   const renderContent = () => {
@@ -33,7 +44,7 @@ export const Login = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 35}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 35}
       enabled
       style={{flex: 1}}>
       <S.Container

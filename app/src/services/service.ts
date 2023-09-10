@@ -7,13 +7,13 @@ class Service {
   }
   initialise = () => {
     let headers = {
-      csrf: 'token',
+    //   csrf: 'token',
     };
 
     let service = axios.create({
-      baseURL: 'http://localhost:8000/',
-      xsrfCookieName: 'XSRF-TOKEN',
-      xsrfHeaderName: 'X-XSRF-TOKEN',
+      baseURL: 'http://10.0.2.2:8000/',
+    //   xsrfCookieName: 'XSRF-TOKEN',
+    //   xsrfHeaderName: 'X-XSRF-TOKEN',
       headers: headers,
     });
 
@@ -51,7 +51,7 @@ class Service {
     return Promise.reject(error);
   };
 
-  get(path: string, callback: () => {}, params: Record<string, string>) {
+  get(path: string, callback?: () => {}, params?: Record<string, string>) {
     return this._axios({
       method: 'get',
       url: path,
@@ -60,7 +60,7 @@ class Service {
     });
   }
 
-  delete(path: string, callback: () => {}, params: Record<string, string>) {
+  delete(path: string, callback?: () => {}, params?: Record<string, string>) {
     return this._axios({
       method: 'delete',
       url: path,
@@ -69,7 +69,7 @@ class Service {
     });
   }
 
-  put(path: string, payload: any, callback: () => {}) {
+  put(path: string, payload: any, callback?: () => {}) {
     return this._axios({
       method: 'put',
       url: path,
@@ -79,7 +79,7 @@ class Service {
     });
   }
 
-  post(path: string, payload: any, callback: () => {}) {
+  post(path: string, payload: any, callback?: () => {}) {
     return this._axios({
       method: 'post',
       url: path,

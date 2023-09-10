@@ -5,12 +5,12 @@ export const Container = styled.View`
 display: flex;
 width: 100%;
 height: 100%;
-padding: ${scaleSize(10)}px;
+padding: 0 ${scaleSize(10)}px;
 `
 
 
 export const ContentContainer = styled.View`
-padding: ${scaleSize(20)}px  ${scaleSize(0)}px;
+padding: ${scaleSize(5)}px  ${scaleSize(0)}px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
