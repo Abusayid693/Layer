@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider, useSelector } from 'react-redux';
@@ -13,6 +14,19 @@ import { Layout } from './src/hoc/auth';
 
 const Stack = createNativeStackNavigator();
 
+const Tab = createBottomTabNavigator();
+
+const AuthenticatedRoutes = () => {
+  return (
+    <Tab.Navigator initialRouteName={'home'}>
+      <Tab.Screen name="home" component={HomePage} />
+      {/* <Tab.Screen name="analytics" component={AnalyticsScreen} />
+    <Tab.Screen name="notes" component={NotesScreen} />
+    <Tab.Screen name="settings" component={SettingScreen} /> */}
+    </Tab.Navigator>
+  );
+};
+
 function App(): JSX.Element {
   const {isAuthenticated, isAuthenticating} = useSelector(
     (state: any) => state.auth,
@@ -24,22 +38,18 @@ function App(): JSX.Element {
         <SplashScreen />
       ) : (
         <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              // headerShown: false,
-              headerBackVisible: false,
-            }}>
-            {isAuthenticated ? (
-              <>
-                <Stack.Screen name="HomePage" component={HomePage} />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="SignUp" component={SignUp} />
-              </>
-            )}
-          </Stack.Navigator>
+          {isAuthenticated ? (
+            <AuthenticatedRoutes />
+          ) : (
+            <Stack.Navigator
+              screenOptions={{
+                // headerShown: false,
+                headerBackVisible: false,
+              }}>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="SignUp" component={SignUp} />
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       )}
     </>

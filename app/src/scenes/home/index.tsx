@@ -21,7 +21,7 @@ export const HomePage = () => {
           isAuthenticated: false,
           isAuthenticating: false,
           userDetails: null,
-        }),
+        })
       );
       console.log("Logout success")
     } catch (error) {
