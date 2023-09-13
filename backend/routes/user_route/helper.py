@@ -31,3 +31,5 @@ def login_user(db: Session, data: LoginRequest):
         return {"token": token}
     else:
         raise HTTPException(status_code=401, detail="Invalid crediantials")
+
+

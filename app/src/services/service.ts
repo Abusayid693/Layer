@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { Platform } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { ACCESS_TOKEN_KEY } from '../hoc/auth';
 
@@ -13,7 +14,7 @@ class Service {
     };
 
     let service = axios.create({
-      baseURL: 'http://10.0.2.2:8000/',
+      baseURL: Platform.OS === 'ios' ? 'http://localhost:8000/' : 'http://10.0.2.2:8000/',
       //   xsrfCookieName: 'XSRF-TOKEN',
       //   xsrfHeaderName: 'X-XSRF-TOKEN',
       headers: headers,
@@ -37,7 +38,9 @@ class Service {
     let token = null;
     try {
       token = await EncryptedStorage.getItem(ACCESS_TOKEN_KEY);
-    } catch (error) {}
+    } catch (error) {
+      console.log('Unable to get encrypted token')
+    }
 
     if (token) {
       config.headers = {

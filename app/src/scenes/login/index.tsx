@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import * as Yup from 'yup';
-import { ACCESS_TOKEN_KEY } from "../../hoc/auth";
-import { login } from '../../services';
+import { ACCESS_TOKEN_KEY } from '../../hoc/auth';
+import { getUserDetails, login } from '../../services';
+import { setAuthSliceState } from '../../store/authSlice';
 import * as S from './style';
 //
+import { useDispatch } from 'react-redux';
 import { FormOne } from './formOne';
 import { FormTwo } from './formTwo';
 
@@ -23,19 +25,29 @@ const validationSchema = Yup.object().shape({
 
 export const Login = () => {
   const [screenIndex, setScreenIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const onSubmit = async (values: any) => {
     console.log('values :', values);
 
     try {
       const {data} = await login({
-        email: 'hhhsdss@rean.com',
-        password: 'gjgsjhbjbjhbj',
+        email: values.email,
+        password: values.password,
       });
       console.log('login :', data);
-    
+
       await EncryptedStorage.setItem(ACCESS_TOKEN_KEY, data.data.token);
 
+      const {data: userDetails} = await getUserDetails();
+
+      dispatch(
+        setAuthSliceState({
+          isAuthenticated: true,
+          isAuthenticating: false,
+          userDetails: userDetails.data,
+        }),
+      );
     } catch (error) {
       console.log('error :', error);
     }

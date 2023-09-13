@@ -15,6 +15,9 @@ export const Layout = ({children}: any) => {
       console.log(`token`, token);
 
       if (!token) {
+        dispatch(
+          setAuthSliceState({isAuthenticated: false, isAuthenticating: false}),
+        );
         return;
       }
 
@@ -22,10 +25,15 @@ export const Layout = ({children}: any) => {
 
       console.log('getUserDetails :', data);
 
-      dispatch(setAuthSliceState({isAuthenticated: true, isAuthenticating: false}));
+      dispatch(
+        setAuthSliceState({isAuthenticated: true, isAuthenticating: false, userDetails:data.data }),
+      );
 
       //   Get my details here
     } catch (error) {
+      dispatch(
+        setAuthSliceState({isAuthenticated: false, isAuthenticating: false}),
+      );
       console.log('Layout :', error);
     }
   };
