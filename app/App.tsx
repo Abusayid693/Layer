@@ -15,7 +15,7 @@ import { Layout } from './src/hoc/auth';
 
 const Stack = createNativeStackNavigator();
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator(); 
 
 const AuthenticatedRoutes = () => {
   return (

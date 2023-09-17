@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native';
-import NavigationIcon from './assets/arrow';
+import NavigationHome from './assets/home';
 
 const {width} = Dimensions.get('window')
 
@@ -36,7 +36,7 @@ export const TabBar = ({ state, descriptors, navigation}: any) =>{
               onPress = {onPress}
               style = {{backgroundColor: isFocused?"#030D16": "#182028", borderRadius: 20, }}>
               <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1, padding: 15}}>
-                <NavigationIcon route={label} isFocused={isFocused}/>
+                <NavigationHome route={label} isFocused={isFocused}/>
               </View>
             </Pressable>
           </View>
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     bottom: 25,
     backgroundColor: "#182028",
     borderRadius: 25,
-    marginHorizontal: width*0.1
+    // marginHorizontal: width*0.1,
+    width:"100%"
   },
   mainItemContainer: {
     flex: 1,
@@ -61,6 +62,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     marginVertical: 10,
     borderRadius: 1, 
-    borderColor: "#333B42"
+    borderColor: "#333B42",
   }, 
 })
