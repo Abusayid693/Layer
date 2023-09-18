@@ -24,5 +24,11 @@ margin-left: ${scaleSize(10)}px;
 export const SavedModelsContainer = styled.View`
 padding: ${scaleSize(10)}px;
 padding-top: 0;
+`
 
+export const ActionButtonContainer = styled.View`
+padding: ${scaleSize(10)}px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
 `

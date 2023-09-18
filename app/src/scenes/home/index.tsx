@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { useDispatch } from 'react-redux';
-import { ClassificationCard, SavedModelCard } from '../../components';
+import { ClassificationButton, ClassificationCard, SavedModelCard } from '../../components';
 import { ACCESS_TOKEN_KEY } from '../../hoc/auth';
 import { setAuthSliceState } from '../../store/authSlice';
 import * as S from './style';
@@ -58,6 +58,13 @@ export const HomePage = () => {
           <SavedModelCard/>
           <SavedModelCard/>
         </S.SavedModelsContainer>
+
+        <S.ContainerLabel>Train Models</S.ContainerLabel>
+        <S.ActionButtonContainer>
+        <ClassificationButton/>
+        <ClassificationButton isImage />
+
+        </S.ActionButtonContainer>
       </S.Container>
       </ScrollView>
     </KeyboardAvoidingView>

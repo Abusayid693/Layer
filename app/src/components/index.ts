@@ -1,4 +1,5 @@
 export * from "./button"
+export * from "./classificationButton"
 export * from "./classificationCard"
 export * from "./input"
 export * from "./savedModelCard"
