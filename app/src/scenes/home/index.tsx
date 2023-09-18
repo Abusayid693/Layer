@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Text } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { useDispatch } from 'react-redux';
-import { Button } from '../../components';
+import { ClassificationCard } from '../../components';
 import { ACCESS_TOKEN_KEY } from '../../hoc/auth';
 import { setAuthSliceState } from '../../store/authSlice';
 import * as S from './style';
@@ -21,9 +21,9 @@ export const HomePage = () => {
           isAuthenticated: false,
           isAuthenticating: false,
           userDetails: null,
-        })
+        }),
       );
-      console.log("Logout success")
+      console.log('Logout success');
     } catch (error) {
       console.log('Logout error :', error);
     }
@@ -37,11 +37,13 @@ export const HomePage = () => {
       enabled
       style={{flex: 1}}>
       <S.Container>
-        <Text>Home Page</Text>
+        <S.ContainerLabel>Home Page</S.ContainerLabel>
+        <S.CardsContainer horizontal >
+          <ClassificationCard />
+          <ClassificationCard />
+          <ClassificationCard />
 
-        <Button onPress={logoutUser} loading={loading}>
-          Logout
-        </Button>
+        </S.CardsContainer>
       </S.Container>
     </KeyboardAvoidingView>
   );

@@ -41,7 +41,7 @@ export const TabBar = ({ state, descriptors, navigation}: any) =>{
             </Pressable>
           </View>
         );
-      })}
+      })} 
     </View>
   );
 }
