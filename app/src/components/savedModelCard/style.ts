@@ -32,7 +32,6 @@ export const ModelName = styled.Text`
 font-size: ${scaleFont(14)}px;
 font-style: normal;
 font-weight: 400;
-line-height: 20px;
 letter-spacing: 0.1px;
 
 `
@@ -41,7 +40,6 @@ export const ModelClasses = styled.Text`
 font-size: ${scaleFont(12)}px;
 font-style: normal;
 font-weight: 500;
-line-height: 16px; 
 color: #257CB5;
 `
 
@@ -51,6 +49,6 @@ export const RightContainer = styled.View`
 
 export const RightArrow = styled.View`
 position: absolute;
-right: 0;
+right: ${scaleSize(10)}px;
 top: 30%;
 `

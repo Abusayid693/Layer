@@ -15,7 +15,6 @@ export const ContainerLabel = styled.Text`
 font-size: ${scaleFont(17)}px;
 font-style: normal;
 font-weight: 700;
-line-height: 125%;
 letter-spacing: 0.374px;
 margin-top: ${scaleSize(10)}px;
 margin-bottom: ${scaleSize(10)}px;

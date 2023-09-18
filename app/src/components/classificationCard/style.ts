@@ -23,7 +23,6 @@ color: #FFF;
 font-size: ${scaleFont(22)}px;
 font-style: normal;
 font-weight: 700;
-line-height: 120%;
 `
 
 export const Subtitle = styled.Text`
@@ -32,7 +31,6 @@ font-family: Apercu;
 font-size: ${scaleFont(22)}px;
 font-style: normal;
 font-weight: 700;
-line-height: 120%;
 `
 
 export const Footer = styled.View`
@@ -45,5 +43,4 @@ font-family: Apercu;
 font-size: ${scaleFont(17)}px;;
 font-style: normal;
 font-weight: 400;
-line-height: 120%;
 `
