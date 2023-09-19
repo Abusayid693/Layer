@@ -6,6 +6,7 @@ display: flex;
 width: 100%;
 padding: 0 ;
 padding-bottom: ${scaleFont(100)}px;
+padding-top: ${scaleFont(20)}px;
 `
 
 export const CardsContainer = styled.ScrollView`

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -11,6 +12,8 @@ export const HomePage = () => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigation = useNavigation();
 
   const logoutUser = async () => {
     setLoading(true);
@@ -61,7 +64,7 @@ export const HomePage = () => {
 
         <S.ContainerLabel>Train Models</S.ContainerLabel>
         <S.ActionButtonContainer>
-        <ClassificationButton/>
+        <ClassificationButton onPress={()=>navigation.navigate("HomePageCsvClassification" as never)} />
         <ClassificationButton isImage />
 
         </S.ActionButtonContainer>

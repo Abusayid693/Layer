@@ -9,7 +9,7 @@ export const Input = ({name, label, isGroup ,...any}: any) => {
 
   return (
     <S.Container isGroup={isGroup} >
-      <S.Label>{label}</S.Label>
+     {label && <S.Label>{label}</S.Label>}
       <S.InputContainer
         {...any}
         onChangeText={helpers.setValue}
