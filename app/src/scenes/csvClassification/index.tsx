@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { BackButton } from '../../components';
 // Forms
 import { ScrollView } from 'react-native';
+import { FormFive } from "./formFive";
 import { FormFour } from "./formFour";
 import { FormOne } from './formOne';
 import { FormThree } from './formThree';
@@ -33,6 +34,7 @@ export const CsvClassification = () => {
               <FormTwo />
               <FormThree />
               <FormFour/>
+              <FormFive/>
             </>
           )}
         </Formik>

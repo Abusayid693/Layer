@@ -3,7 +3,7 @@ import { scaleFont, scaleSize } from '../../util/mixins';
 
 
 export const Container = styled.View<{isGroup: boolean}>`
-margin: 5px 0;
+margin:  0;
 ${({isGroup}) =>
 isGroup &&
 `flex: 1;
