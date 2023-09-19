@@ -1,6 +1,7 @@
 export * from "./button"
 export * from "./classificationButton"
 export * from "./classificationCard"
+export * from "./dropdown"
 export * from "./input"
 export * from "./savedModelCard"
 export * from "./tabBar"

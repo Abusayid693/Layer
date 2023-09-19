@@ -10,4 +10,4 @@ export const FormOne = ()=>{
             <Input  name="name" />
         </S.FormContainer>
     )
-}
+} 

@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { BackButton } from '../../components';
 // Forms
 import { FormOne } from './formOne';
+import { FormTwo } from './formTwo';
 
 export const CsvClassification = () => {
   return (
@@ -17,11 +18,17 @@ export const CsvClassification = () => {
         <Formik
           initialValues={{
             name: '',
+            optimizer: '',
           }}
-          initialErrors={{email: 'Required'}}
+          //   initialErrors={{email: 'Required'}}
           //   validationSchema={validationSchema[screenIndex]}
           onSubmit={() => {}}>
-          {({handleChange, handleBlur, handleSubmit, values}) => <FormOne />}
+          {({handleChange, handleBlur, handleSubmit, values}) => (
+            <>
+              <FormOne />
+              <FormTwo />
+            </>
+          )}
         </Formik>
       </S.MainBody>
     </S.Container>
