@@ -3,11 +3,15 @@ import * as S from './style';
 import { Formik } from 'formik';
 import { BackButton } from '../../components';
 // Forms
+import { ScrollView } from 'react-native';
+import { FormFour } from "./formFour";
 import { FormOne } from './formOne';
+import { FormThree } from './formThree';
 import { FormTwo } from './formTwo';
 
 export const CsvClassification = () => {
   return (
+    <ScrollView>
     <S.Container>
       <S.Header>
         <BackButton />
@@ -19,18 +23,21 @@ export const CsvClassification = () => {
           initialValues={{
             name: '',
             optimizer: '',
+            learning_rate: '',
+            epochs:''
           }}
-          //   initialErrors={{email: 'Required'}}
-          //   validationSchema={validationSchema[screenIndex]}
           onSubmit={() => {}}>
-          {({handleChange, handleBlur, handleSubmit, values}) => (
+          {() => (
             <>
               <FormOne />
               <FormTwo />
+              <FormThree />
+              <FormFour/>
             </>
           )}
         </Formik>
       </S.MainBody>
     </S.Container>
+    </ScrollView>
   );
 };
