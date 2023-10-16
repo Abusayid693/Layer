@@ -1,13 +1,13 @@
-import { Input } from "../../../components"
+import { Input } from "../../../../components"
 import * as S from "../style"
 
-export const FormSix = ()=>{
+export const FormThree = ()=>{
     return (
         <S.FormContainer>
             <S.FormLabel>
-                Batch Size
+                Learning Rate
             </S.FormLabel>
-            <Input  name="batch_size" />
+            <Input  name="learning_rate" />
         </S.FormContainer>
     )
 } 

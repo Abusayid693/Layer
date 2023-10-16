@@ -1,4 +1,4 @@
-import { Input } from '../../../components';
+import { Input } from "../../../../components";
 import * as S from '../style';
 
 export const FormFour = () => {

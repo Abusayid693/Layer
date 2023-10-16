@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from '../../../components/dropdown';
+import { Dropdown } from '../../../../components/dropdown';
 import * as S from '../style';
 
 

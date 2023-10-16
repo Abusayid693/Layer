@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { HiddenLayerInput, Input } from '../../../components';
+import { HiddenLayerInput, Input } from "../../../../components";
 import * as S from '../style';
 
 export const FormFive = ({hiddenLayerCount}: any) => {
