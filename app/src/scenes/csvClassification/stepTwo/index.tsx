@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useState } from 'react';
 import { HiddenLayerInput } from '../../../components';
 import PlusIcon from '../assets/arrow';
@@ -6,7 +7,7 @@ import * as S from './style';
 export const StepTwo = ({setIndex}: any) => {
   const [layerCount, setLayerCount] = useState(2);
 
-  const [layers, setLayers] = useState({
+  const [layers, setLayers] = useState<Record<string, string>>({
     layer1: '',
   });
 
@@ -19,7 +20,18 @@ export const StepTwo = ({setIndex}: any) => {
     setLayerCount(prev => prev + 1);
   };
 
-  console.log('layers :', layers)
+  const handleRemoveLayer = (name:string)=>{
+    const prev = layers;
+    const newLayers =_.omit(prev, name)
+    setLayers(newLayers)
+  }
+
+  const handleInput = (name: string, value: string) => {
+    setLayers(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <S.FormContainer>
@@ -29,7 +41,15 @@ export const StepTwo = ({setIndex}: any) => {
           <PlusIcon />
         </S.AddButton>
       </S.Header>
-      <HiddenLayerInput name={`layer`} />
+      {Object.keys(layers).map(layer => (
+        <HiddenLayerInput
+          handleInput={handleInput}
+          value={layers[layer]}
+          key={layer}
+          name={layer}
+          handleRemoveLayer={handleRemoveLayer}
+        />
+      ))}
     </S.FormContainer>
   );
 };
