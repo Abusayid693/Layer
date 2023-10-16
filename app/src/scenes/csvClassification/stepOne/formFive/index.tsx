@@ -1,8 +1,8 @@
 import { View } from 'react-native';
-import { HiddenLayerInput, Input } from "../../../../components";
+import { Input } from "../../../../components";
 import * as S from '../style';
 
-export const FormFive = ({hiddenLayerCount}: any) => {
+export const FormFive = () => {
   return (
     <S.FormContainer>
       <S.InputGroup>
@@ -20,11 +20,6 @@ export const FormFive = ({hiddenLayerCount}: any) => {
           Note: Please put features and classes according to your csv file
         </S.FormNoteMessage>
       </S.FormNoteContainer>
-
-      <S.FormLabel>Hidden Layers</S.FormLabel>
-      {new Array(hiddenLayerCount).fill(5).map((_, index) => (
-        <HiddenLayerInput key={index} name={`layer${index}`} />
-      ))}
     </S.FormContainer>
   );
 };

@@ -38,3 +38,15 @@ export const BackButton = ({...any}) => {
     </TouchableOpacity>
   );
 };
+
+
+export const BackButtonOnAction = ({action,...any}:any) => {
+
+  return (
+    <TouchableOpacity onPress={action} {...any}>
+      <S.BackBtnContainer >
+        <ArrowIcon />
+      </S.BackBtnContainer>
+    </TouchableOpacity>
+  );
+};

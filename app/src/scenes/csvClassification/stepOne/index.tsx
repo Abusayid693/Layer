@@ -1,7 +1,9 @@
 
 import { Formik } from 'formik';
 // Forms
-import { useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { Button } from '../../../components';
+import { STEP_TWO } from '../constant';
 import { FormFive } from './formFive';
 import { FormFour } from './formFour';
 import { FormOne } from './formOne';
@@ -17,36 +19,28 @@ const baseState = {
   batch_size: '',
 };
 
-export const StepOne = () => {
-  const [hiddenLayerCount, setHiddenLayerCount] = useState(1);
+export const StepOne = ({setIndex}:any) => {
   const ref = useRef<any>();
 
-  const initialState = useMemo(() => {
-    const layer = `layer${hiddenLayerCount}`;
-    const previousState = ref.current?.values ?? baseState;
-
-    return {
-      ...previousState,
-      [layer]: 10,
-    };
-  }, [hiddenLayerCount]);
-
-  console.log('initialState :', initialState);
+  const handleSubmit = ()=>{
+    setIndex(STEP_TWO)
+  }
 
   return (
     <Formik
       enableReinitialize
       innerRef={ref}
-      initialValues={initialState}
-      onSubmit={() => {}}>
-      {() => (
+      initialValues={baseState}
+      onSubmit={handleSubmit}>
+      {({submitForm}) => (
         <>
           <FormOne />
           <FormTwo />
           <FormThree />
           <FormFour />
-          <FormFive hiddenLayerCount={hiddenLayerCount} />
+          <FormFive/>
           <FormSix />
+          <Button onPress={submitForm} >Next</Button>
         </>
       )}
     </Formik>

@@ -1,16 +1,23 @@
 import { TouchableOpacity } from 'react-native';
-import { Input } from '../input';
 import * as S from './style';
 
-import DeleteIcon from "./assets/delete";
+import DeleteIcon from './assets/delete';
 
 export const HiddenLayerInput = ({...any}) => {
   return (
     <S.Container>
-      <Input {...any} isGroup />
+      <S.ContainerInput isGroup>
+        <S.InputContainer
+          onChangeText={e => {}}
+          value={'10'}
+          isError={false}
+          {...any}
+        />
+      </S.ContainerInput>
+
       <TouchableOpacity>
         <S.DeleteButton>
-          <DeleteIcon/>
+          <DeleteIcon />
         </S.DeleteButton>
       </TouchableOpacity>
     </S.Container>
