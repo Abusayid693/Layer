@@ -7,3 +7,4 @@ FashionMNIST
 .DS_Store
 data 
 CIFAR10
+notebooks
