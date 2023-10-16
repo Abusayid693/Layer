@@ -41,6 +41,8 @@ background-color: #D3F0EB;
 padding: ${scaleSize(10)}px;
 border-radius: ${scaleSize(10)}px;
 margin-top: ${scaleSize(10)}px;
+margin-bottom: ${scaleSize(20)}px;
+
 `
 
 export const FormNoteMessage = styled.Text`
