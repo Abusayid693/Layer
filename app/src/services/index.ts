@@ -9,7 +9,7 @@ export const getSignedS3Token = (body:any)=> service.post("app1/auth/get-signed-
 export const uploadToS3 = async (signedRequest:any, fileDetail:any, fileType:any) => {
     const options = {
       headers: {
-        "Content-Type": fileType,
+        "Content-Type": 'multipart/form-data',
       },
     };
     console.log("Uploading....");
