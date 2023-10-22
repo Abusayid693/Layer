@@ -2,16 +2,18 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import DocumentPicker, {
-    DirectoryPickerResponse,
-    DocumentPickerResponse,
-    isCancel,
-    isInProgress,
+  DirectoryPickerResponse,
+  DocumentPickerResponse,
+  isCancel,
+  isInProgress,
 } from 'react-native-document-picker';
+import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../../../components/button';
 import PlusIcon from '../assets/arrow';
 import CrossIcon from '../assets/cross';
 import CsvIcon from '../assets/csv';
 import * as S from './style';
+
 
 import { getSignedS3Token, uploadToS3 } from '../../../services';
 
@@ -40,24 +42,35 @@ export const StepThree = ({}: any) => {
   };
 
   const getSignedUrl = async () => {
+
+    const object_key =  uuidv4()+result[0].name
+
     const {data} = await getSignedS3Token({
-      object_key: result[0].name+'android',
+      object_key
     });
 
-    return data
+    return {data, object_key}
   };
 
   const uploadCSV = async () => {
     setLoading(true);
 
     try {
-     const signedImageResponse:any = await getSignedUrl();
+     const {data:signedImageResponse, object_key}:any = await getSignedUrl();
 
-     console.log('signedImageResponse :', signedImageResponse)
+     const file = {
+      uri:  result[0].uri,
+      name: object_key,
+      type: result[0].type
+    }
+
+   const formData = new FormData();
+
+   formData.append("file", file);
 
       await uploadToS3(
         signedImageResponse.data,
-        result[0],
+        formData,
         result[0].type,
       );
     } catch (error:any) {
