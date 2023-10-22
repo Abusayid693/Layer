@@ -1,12 +1,13 @@
+import io
+import os
+from io import BytesIO, StringIO
+from pathlib import Path
+
+import numpy as np
 import torch
 import torch.nn as nn
-from pathlib import Path
-from sklearn.datasets import make_blobs
-from sklearn.datasets import make_circles
-import numpy as np
-import os
-from config.s3 import s3, AWS_BUCKET
-from io import BytesIO
+from config.s3 import AWS_BUCKET, s3
+from sklearn.datasets import make_blobs, make_circles
 
 
 def getSequentialLayer(layer_sizes: list[int]):
@@ -67,10 +68,28 @@ def readCsvFile(path):
     print("Current path:", current_path)
     return np.genfromtxt("./demo/multiclass.csv", delimiter=",", skip_header=True)
 
+lines_to_skip = 3
+
 def getCsvFileBufferFromPath(file_key):
     response = s3.get_object(Bucket=AWS_BUCKET, Key=file_key)
     file_data = response['Body'].read()
     buffer = BytesIO(file_data)
+
+    if file_key[0]=="A" :
+        for _ in range(5):
+           next(buffer)
+        header_line = next(buffer).strip()
+        data = np.genfromtxt(buffer, delimiter=',', skip_header=True, max_rows=990)
+        return data
+    
+    if file_key[0]=="I" :
+        for _ in range(4):
+           next(buffer)
+        header_line = next(buffer).strip()
+        data = np.genfromtxt(buffer, delimiter=',', skip_header=True, max_rows=990)
+        return data
+
+
     np_array = np.genfromtxt(buffer, delimiter=',', skip_header=True)
     return np_array
 
