@@ -1,5 +1,5 @@
 import db
-from config.s3 import AWS_BUCKET, s3
+from config.s3 import AWS_BUCKET, s3version4
 from db_models.user.controller import get_user_by_id
 from db_models.user.schema import LoginRequest, UserRequest
 from fastapi import APIRouter, Depends, Request
@@ -36,8 +36,8 @@ async def me(request: Request, db: Session = Depends(db.get_db)):
 
         req_data = await request.json()
 
-        presigned_url = s3.generate_presigned_url(
-        'put_object',
+        presigned_url = s3version4.generate_presigned_url(
+        ClientMethod='put_object',
         Params={'Bucket': AWS_BUCKET, 'Key': req_data["object_key"]},
         ExpiresIn=3600,  # URL expiration time in seconds (1 hour in this example)
         )
