@@ -50,3 +50,15 @@ export const BackButtonOnAction = ({action,...any}:any) => {
     </TouchableOpacity>
   );
 };
+
+
+export const IconButton = ({onPress,children,...any}:any) => {
+
+  return (
+    <TouchableOpacity onPress={onPress} {...any}>
+      <S.BackBtnContainer >
+       {children}
+      </S.BackBtnContainer>
+    </TouchableOpacity>
+  );
+};

@@ -1,11 +1,17 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { scaleSize } from '../../../util/mixins';
 
-// Form components
-export const FormContainer = styled.View`
+export const Container = styled.View`
 background-color: #EEEEEF;
 padding: ${scaleSize(10)}px;
+position: relative;
+height: ${Dimensions.get("window").height - 200};
+width: 100%;
+
+justify-content: space-between;
 `
+
 export const Header = styled.View`
 display: flex;
 flex-direction: row;

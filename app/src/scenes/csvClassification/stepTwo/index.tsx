@@ -1,7 +1,9 @@
 import _ from "lodash";
 import { useState } from 'react';
-import { HiddenLayerInput } from '../../../components';
+import { View } from "react-native";
+import { Button, HiddenLayerInput } from '../../../components';
 import PlusIcon from '../assets/arrow';
+import { STEP_THREE } from "../constant";
 import * as S from './style';
 
 export const StepTwo = ({setIndex}: any) => {
@@ -33,8 +35,13 @@ export const StepTwo = ({setIndex}: any) => {
     }));
   };
 
+  const next = ()=>{
+    setIndex(STEP_THREE)
+  }
+
   return (
-    <S.FormContainer>
+    <S.Container>
+      <View>
       <S.Header>
         <S.FormLabel>Hidden Layers</S.FormLabel>
         <S.AddButton onPress={handleAddLayers}>
@@ -50,6 +57,8 @@ export const StepTwo = ({setIndex}: any) => {
           handleRemoveLayer={handleRemoveLayer}
         />
       ))}
-    </S.FormContainer>
+            </View>
+       <Button onPress={next} >Next</Button>
+    </S.Container>
   );
 };
