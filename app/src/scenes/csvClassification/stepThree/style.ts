@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { scaleSize } from '../../../util/mixins';
+import { scaleFont, scaleSize } from '../../../util/mixins';
 
 export const Container = styled.View`
 background-color: #EEEEEF;
@@ -60,5 +60,14 @@ export const FolderSelector = styled.TouchableOpacity`
 margin-top: ${scaleSize(10)}px;
 background: white;
 color: red;
-padding: ${scaleSize(40)}px 0;
+padding: ${scaleSize(40)}px;
+border-radius: ${scaleSize(10)}px;
+
+align-items: center;
+`
+
+export const FolderSelectorText =  styled.Text`
+font-weight: 400;
+font-size: ${scaleFont(15)}px;
+opacity: 0.6;
 `

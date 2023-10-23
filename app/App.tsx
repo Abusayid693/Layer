@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider, useSelector } from 'react-redux';
-import { TabBar } from './src/components/tabBar';
 import { HomeNavigator } from './src/navigators/home';
 import { HomePage } from './src/scenes/home';
 import { Login } from './src/scenes/login';
@@ -19,12 +18,16 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthenticatedRoutes = () => {
+
   return (
     <Tab.Navigator
       initialRouteName={'home'}
-      tabBar={props => <TabBar {...props} />}
+      // tabBar={props => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
+        tabBarStyle:{
+          display: 'none'
+        }
       }}
       >
       <Tab.Screen name="home" component={HomeNavigator} />

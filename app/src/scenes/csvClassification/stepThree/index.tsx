@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import DocumentPicker, {
   DirectoryPickerResponse,
   DocumentPickerResponse,
@@ -110,7 +110,7 @@ export const StepThree = ({}: any) => {
                   handleError(e);
                 }
               }}>
-              <Text> open picker for single file selection</Text>
+              <S.FolderSelectorText>Select CSV</S.FolderSelectorText>
             </S.FolderSelector>
           )}
         </S.UploadContainer>

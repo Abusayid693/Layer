@@ -4,10 +4,10 @@ import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { useDispatch } from 'react-redux';
 import { ClassificationButton, ClassificationCard, SavedModelCard } from '../../components';
+import { TabBar } from '../../components/tabBar';
 import { ACCESS_TOKEN_KEY } from '../../hoc/auth';
 import { setAuthSliceState } from '../../store/authSlice';
 import * as S from './style';
-
 export const HomePage = () => {
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +39,7 @@ export const HomePage = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 35}
       enabled
       style={{flex: 1}}>
+        <TabBar/>
         <ScrollView>
       <S.Container>
         <S.ContainerLabel>Home Page</S.ContainerLabel>
