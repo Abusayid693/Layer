@@ -4,7 +4,13 @@ import * as S from './style';
 // Forms
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { STEP_FOUR, STEP_ONE, STEP_THREE, STEP_TWO } from './constant';
+import {
+  STEP_FOUR,
+  STEP_ONE,
+  STEP_THREE,
+  STEP_TWO,
+  stepOneState,
+} from './constant';
 import { StepFour } from './stepFour';
 import { StepOne } from './stepOne';
 import { StepThree } from './stepThree';
@@ -14,11 +20,30 @@ export const CsvClassification = () => {
   const navigation = useNavigation();
   const [index, setIndex] = useState(STEP_ONE);
 
+  const [mainState, setMainState] = useState({
+    stepOne: {...stepOneState},
+    stepTwo: {},
+  });
+
   const renderContent = () => {
-    if (index === STEP_ONE) return <StepOne setIndex={setIndex} />;
-    if (index === STEP_TWO) return <StepTwo setIndex={setIndex} />;
-    if(index === STEP_THREE) return <StepThree setIndex={setIndex}/>;
-    if(index === STEP_FOUR) return <StepFour setIndex={setIndex}/>
+    if (index === STEP_ONE)
+      return (
+        <StepOne
+          setIndex={setIndex}
+          setMainState={setMainState}
+          mainState={mainState}
+        />
+      );
+    if (index === STEP_TWO)
+      return (
+        <StepTwo
+          setIndex={setIndex}
+          setMainState={setMainState}
+          mainState={mainState}
+        />
+      );
+    if (index === STEP_THREE) return <StepThree setIndex={setIndex} />;
+    if (index === STEP_FOUR) return <StepFour setIndex={setIndex} />;
   };
 
   const handleBack = () => {
@@ -26,7 +51,7 @@ export const CsvClassification = () => {
       setIndex(STEP_ONE);
       return;
     }
-    if(index === STEP_THREE){
+    if (index === STEP_THREE) {
       setIndex(STEP_TWO);
       return;
     }
@@ -35,16 +60,16 @@ export const CsvClassification = () => {
 
   return (
     <SafeAreaView>
-    <ScrollView>
-      <S.Container>
-        <S.Header>
-          <BackButtonOnAction action={handleBack} />
-          <S.HeaderTitle>CSV</S.HeaderTitle>
-        </S.Header>
+      <ScrollView>
+        <S.Container>
+          <S.Header>
+            <BackButtonOnAction action={handleBack} />
+            <S.HeaderTitle>CSV</S.HeaderTitle>
+          </S.Header>
 
-        <S.MainBody>{renderContent()}</S.MainBody>
-      </S.Container>
-    </ScrollView>
+          <S.MainBody>{renderContent()}</S.MainBody>
+        </S.Container>
+      </ScrollView>
     </SafeAreaView>
   );
 };

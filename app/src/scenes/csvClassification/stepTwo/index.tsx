@@ -2,24 +2,20 @@ import _ from "lodash";
 import { useState } from 'react';
 import { View } from "react-native";
 import { Button, HiddenLayerInput } from '../../../components';
+import { uid } from "../../../util";
 import PlusIcon from '../assets/arrow';
 import { STEP_THREE } from "../constant";
 import * as S from './style';
 
-export const StepTwo = ({setIndex}: any) => {
-  const [layerCount, setLayerCount] = useState(2);
+export const StepTwo = ({setIndex, setMainState, mainState}: any) => {
 
-  const [layers, setLayers] = useState<Record<string, string>>({
-    layer1: '',
-  });
+  const [layers, setLayers] = useState<Record<string, string>>(mainState.stepTwo);
 
   const handleAddLayers = () => {
     setLayers(prev => ({
       ...prev,
-      [`layer${layerCount}`]: '',
+      [`layer${uid()}`]: '',
     }));
-
-    setLayerCount(prev => prev + 1);
   };
 
   const handleRemoveLayer = (name:string)=>{
@@ -36,6 +32,7 @@ export const StepTwo = ({setIndex}: any) => {
   };
 
   const next = ()=>{
+    setMainState((prev:any)=>({...prev, stepTwo: layers}))
     setIndex(STEP_THREE)
   }
 

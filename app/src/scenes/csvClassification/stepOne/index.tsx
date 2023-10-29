@@ -28,18 +28,23 @@ const validationSchema = Yup.object().shape({
   batch_size: Yup.string().required('Required'),
 });
 
-export const StepOne = ({setIndex}:any) => {
+
+export const StepOne = ({setIndex, setMainState, mainState}:any) => {
   const ref = useRef<any>();
 
-  const handleSubmit = ()=>{
+  const handleSubmit = (values:any)=>{
+    console.log('values :', values)
     setIndex(STEP_TWO)
+    setMainState((prev:any)=>({...prev, stepOne:{...values} }))
   }
+
+
 
   return (
     <Formik
       enableReinitialize
       innerRef={ref}
-      initialValues={baseState}
+      initialValues={mainState.stepOne}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
       >
