@@ -52,7 +52,7 @@ export const CsvClassification = () => {
           mainState={mainState}
         />
       );
-    if (index === STEP_FOUR) return <StepFour setIndex={setIndex} />;
+    if (index === STEP_FOUR) return <StepFour setIndex={setIndex} mainState={mainState} />;
   };
 
   const handleBack = () => {

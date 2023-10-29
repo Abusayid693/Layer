@@ -30,7 +30,8 @@ export const ListContainer = styled.View`
 display: flex;
 flex-direction: column;
 gap: ${scaleSize(10)}px;
-padding-top: ${scaleSize(20)}px;
+padding-top: ${scaleSize(10)}px;
+padding-bottom: ${scaleSize(15)}px;
 `
 
 export const Row = styled.View`
@@ -51,4 +52,10 @@ font-size: ${scaleFont(17)}px;
 background: rgba(118, 118, 128, 0.12);
 padding: ${scaleSize(6)}px ${scaleSize(7)}px;
 border-radius: ${scaleSize(5)}px;
+`
+
+export const HiddenLayerInput = styled.Text`
+font-size: ${scaleFont(17)}px;
+background: rgba(118, 118, 128, 0.12);
+padding: ${scaleSize(13)}px ${scaleSize(10)}px;
 `

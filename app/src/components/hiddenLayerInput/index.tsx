@@ -7,6 +7,7 @@ export const HiddenLayerInput = ({
   handleInput,
   name,
   handleRemoveLayer,
+  readonly,
   ...any
 }: any) => {
   return (
@@ -21,9 +22,9 @@ export const HiddenLayerInput = ({
       </S.ContainerInput>
 
       <TouchableOpacity onPress={() =>handleRemoveLayer(name)} >
-        <S.DeleteButton>
+       {!readonly && <S.DeleteButton>
           <DeleteIcon />
-        </S.DeleteButton>
+        </S.DeleteButton>}
       </TouchableOpacity>
     </S.Container>
   );
