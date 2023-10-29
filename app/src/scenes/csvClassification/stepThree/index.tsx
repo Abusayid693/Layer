@@ -17,11 +17,11 @@ import * as S from './style';
 import { getSignedS3Token, uploadToS3 } from '../../../services';
 import { STEP_FOUR } from '../constant';
 
-export const StepThree = ({setIndex}: any) => {
+export const StepThree = ({setIndex, setMainState, mainState}: any) => {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<
     Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | any
-  >([]);
+  >( mainState.stepThree ? [mainState.stepThree] : []);
 
   useEffect(() => {
     // @ts-ignore
@@ -42,7 +42,8 @@ export const StepThree = ({setIndex}: any) => {
   };
 
   const getSignedUrl = async () => {
-    const object_key = Platform.OS === 'ios' ? 'I'+result[0].name : result[0].name;
+    const object_key =
+      Platform.OS === 'ios' ? 'I' + result[0].name : result[0].name;
 
     const {data} = await getSignedS3Token({
       object_key,
@@ -68,16 +69,18 @@ export const StepThree = ({setIndex}: any) => {
       formData.append('file', file);
 
       await uploadToS3(signedImageResponse.data, formData, result[0].type);
-      setIndex(STEP_FOUR)
+
+      setMainState((prev: any) => ({...prev, stepThree: result[0]}));
+      setIndex(STEP_FOUR);
     } catch (error: any) {
       console.log('error :', error);
     }
     setLoading(false);
   };
 
-  const next = ()=>{
-    setIndex(STEP_FOUR)
-  }
+  const next = () => {
+    setIndex(STEP_FOUR);
+  };
 
   return (
     <S.Container>
@@ -122,7 +125,7 @@ export const StepThree = ({setIndex}: any) => {
         </S.UploadContainer>
       </View>
 
-      <Button onPress={next} loading={loading}>
+      <Button onPress={uploadCSV} loading={loading}>
         Continue
       </Button>
     </S.Container>

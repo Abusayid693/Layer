@@ -23,6 +23,7 @@ export const CsvClassification = () => {
   const [mainState, setMainState] = useState({
     stepOne: {...stepOneState},
     stepTwo: {},
+    stepThree: null,
   });
 
   const renderContent = () => {
@@ -42,7 +43,14 @@ export const CsvClassification = () => {
           mainState={mainState}
         />
       );
-    if (index === STEP_THREE) return <StepThree setIndex={setIndex} />;
+    if (index === STEP_THREE)
+      return (
+        <StepThree
+          setIndex={setIndex}
+          setMainState={setMainState}
+          mainState={mainState}
+        />
+      );
     if (index === STEP_FOUR) return <StepFour setIndex={setIndex} />;
   };
 
@@ -53,6 +61,10 @@ export const CsvClassification = () => {
     }
     if (index === STEP_THREE) {
       setIndex(STEP_TWO);
+      return;
+    }
+    if(index === STEP_FOUR){
+      setIndex(STEP_THREE);
       return;
     }
     navigation.goBack();
