@@ -24,6 +24,7 @@ export const CsvClassification = () => {
     stepOne: {...stepOneState},
     stepTwo: {},
     stepThree: null,
+    isFileUploaded: false
   });
 
   const renderContent = () => {

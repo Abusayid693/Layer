@@ -21,7 +21,7 @@ export const StepThree = ({setIndex, setMainState, mainState}: any) => {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<
     Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | any
-  >( mainState.stepThree ? [mainState.stepThree] : []);
+  >(mainState.stepThree ? [mainState.stepThree] : []);
 
   useEffect(() => {
     // @ts-ignore
@@ -53,6 +53,11 @@ export const StepThree = ({setIndex, setMainState, mainState}: any) => {
   };
 
   const uploadCSV = async () => {
+    if (mainState.isFileUploaded) {
+      setIndex(STEP_FOUR);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -70,7 +75,11 @@ export const StepThree = ({setIndex, setMainState, mainState}: any) => {
 
       await uploadToS3(signedImageResponse.data, formData, result[0].type);
 
-      setMainState((prev: any) => ({...prev, stepThree: result[0]}));
+      setMainState((prev: any) => ({
+        ...prev,
+        stepThree: result[0],
+        isFileUploaded: true,
+      }));
       setIndex(STEP_FOUR);
     } catch (error: any) {
       console.log('error :', error);
@@ -115,6 +124,10 @@ export const StepThree = ({setIndex, setMainState, mainState}: any) => {
                     copyTo: 'cachesDirectory',
                   });
                   setResult([pickerResult]);
+                  setMainState((prev: any) => ({
+                    ...prev,
+                    isFileUploaded: false,
+                  }));
                 } catch (e) {
                   handleError(e);
                 }
