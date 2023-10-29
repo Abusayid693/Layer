@@ -4,7 +4,8 @@ import * as S from './style';
 // Forms
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { STEP_ONE, STEP_THREE, STEP_TWO } from './constant';
+import { STEP_FOUR, STEP_ONE, STEP_THREE, STEP_TWO } from './constant';
+import { StepFour } from './stepFour';
 import { StepOne } from './stepOne';
 import { StepThree } from './stepThree';
 import { StepTwo } from './stepTwo';
@@ -16,7 +17,8 @@ export const CsvClassification = () => {
   const renderContent = () => {
     if (index === STEP_ONE) return <StepOne setIndex={setIndex} />;
     if (index === STEP_TWO) return <StepTwo setIndex={setIndex} />;
-    if(index === STEP_THREE) return <StepThree setIndex={setIndex}/>
+    if(index === STEP_THREE) return <StepThree setIndex={setIndex}/>;
+    if(index === STEP_FOUR) return <StepFour setIndex={setIndex}/>
   };
 
   const handleBack = () => {

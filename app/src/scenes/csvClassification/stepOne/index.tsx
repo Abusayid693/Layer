@@ -2,6 +2,7 @@
 import { Formik } from 'formik';
 // Forms
 import { useRef } from 'react';
+import * as Yup from 'yup';
 import { Button } from '../../../components';
 import { STEP_TWO } from '../constant';
 import { FormFive } from './formFive';
@@ -19,6 +20,14 @@ const baseState = {
   batch_size: '',
 };
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Required'),
+  optimizer: Yup.string().required('Required'),
+  learning_rate: Yup.string().required('Required'),
+  epochs: Yup.string().required('Required'),
+  batch_size: Yup.string().required('Required'),
+});
+
 export const StepOne = ({setIndex}:any) => {
   const ref = useRef<any>();
 
@@ -31,7 +40,9 @@ export const StepOne = ({setIndex}:any) => {
       enableReinitialize
       innerRef={ref}
       initialValues={baseState}
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+      >
       {({submitForm}) => (
         <>
           <FormOne />

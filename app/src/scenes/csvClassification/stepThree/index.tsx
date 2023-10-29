@@ -15,8 +15,9 @@ import CsvIcon from '../assets/csv';
 import * as S from './style';
 
 import { getSignedS3Token, uploadToS3 } from '../../../services';
+import { STEP_FOUR } from '../constant';
 
-export const StepThree = ({}: any) => {
+export const StepThree = ({setIndex}: any) => {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<
     Array<DocumentPickerResponse> | DirectoryPickerResponse | undefined | any
@@ -67,11 +68,16 @@ export const StepThree = ({}: any) => {
       formData.append('file', file);
 
       await uploadToS3(signedImageResponse.data, formData, result[0].type);
+      setIndex(STEP_FOUR)
     } catch (error: any) {
       console.log('error :', error);
     }
     setLoading(false);
   };
+
+  const next = ()=>{
+    setIndex(STEP_FOUR)
+  }
 
   return (
     <S.Container>
@@ -116,7 +122,7 @@ export const StepThree = ({}: any) => {
         </S.UploadContainer>
       </View>
 
-      <Button onPress={uploadCSV} loading={loading}>
+      <Button onPress={next} loading={loading}>
         Continue
       </Button>
     </S.Container>
